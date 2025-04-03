@@ -41,7 +41,7 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|in:particulier,zakelijk',
+            'role' => 'in:particulier,zakelijk',
         ], $messages);
 
         $user = User::create($validated);
@@ -87,7 +87,6 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('show.login'); 
-
     }
 
 }

@@ -31,7 +31,7 @@
             Registreren als<span style="color: red;"> *</span>
           </label>
           <div class="mt-2">
-            <select name="role" id="role" required
+            <select name="role" id="role" 
               class="block w-full rounded-md border border-gray-300 bg-white px-3 py-1.5 text-base text-gray-900 outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm/6">
               <option value="" disabled selected>Geen adverteerder</option>
               <option value="particulier">Particuliere adverteerder</option>
