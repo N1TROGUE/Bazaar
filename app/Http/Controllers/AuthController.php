@@ -6,13 +6,19 @@ use App\Models\User;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Role;
+use Illuminate\Support\Facades\Validator;
+
+
 
 class AuthController extends Controller
 {
     //GET
     public function showRegister ()
     {
-        return view('auth.register');
+        $roles = Role::where('name', '!=', 'admin')->get();
+
+        return view('auth.register', compact('roles'));
     }
 
     //GET
@@ -22,7 +28,7 @@ class AuthController extends Controller
     }
 
     //POST
-    public function register (Request $request)
+    public function register(Request $request)
     {
         $messages = [
             'name.required' => 'Naam is verplicht.',
@@ -34,22 +40,44 @@ class AuthController extends Controller
             'password.required' => 'Wachtwoord is verplicht.',
             'password.string' => 'Wachtwoord moet een geldige tekst zijn.',
             'password.min' => 'Wachtwoord moet minimaal 8 tekens bevatten.',
-            'password.confirmed' => 'Wachtwoorden komen niet overeen.'
+            'password.confirmed' => 'Wachtwoorden komen niet overeen.',
+            'role_id.exists' => 'Selecteer een geldige rol.',
+            'role_id.required' => 'Het is verplicht een rol te kiezen'
         ];
 
-        $validated = $request->validate([
+        // validatie handmatig
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'role' => 'in:particulier,zakelijk',
+            'role_id' => 'required|exists:roles,id',
         ], $messages);
 
-        $user = User::create($validated);
+        if ($validator->fails()) {
+            // Laad opnieuw de rollen
+            $roles = Role::where('name', '!=', 'admin')->get();
+
+            // terug naar formulier mét fouten en rollen
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with(['roles' => $roles]);
+        }
+
+        // Gebruiker aanmaken
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role_id' => $request->role_id,
+        ]);
 
         Auth::login($user);
 
         return redirect()->route('index');
     }
+
 
     //POST
     public function login (Request $request)

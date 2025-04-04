@@ -1,4 +1,4 @@
-@section('title', 'Login')
+@section('title', 'Registreren')
 
 <x-auth-layout>
   <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -27,18 +27,22 @@
         </div>
 
         <div>
-          <label for="role" class="block text-sm/6 font-medium text-gray-900">
+          <label for="role_id" class="block text-sm/6 font-medium text-gray-900">
             Registreren als<span style="color: red;"> *</span>
           </label>
           <div class="mt-2">
-            <select name="role" id="role" 
-              class="block w-full rounded-md border border-gray-300 bg-white px-3 py-1.5 text-base text-gray-900 outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm/6">
-              <option value="" disabled selected>Geen adverteerder</option>
-              <option value="particulier">Particuliere adverteerder</option>
-              <option value="zakelijk">Zakelijke adverteerder</option>
+            <select name="role_id" id="role_id" 
+              class="block w-full rounded-md border border-gray-300 bg-white px-3 py-1.5 text-base text-gray-900 placeholder-gray-400 outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-600 sm:text-sm/6">
+              <option value="" disabled selected>Selecteer je rol</option>
+              @foreach ($roles as $role)
+                <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>
+                  {{ ucfirst($role->name) }}
+                </option>
+              @endforeach
             </select>
           </div>
-        </div>        
+        </div>
+                
 
         <div>
           <div class="flex items-center justify-between">

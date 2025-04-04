@@ -18,6 +18,7 @@ Route::get('/index', function () {
     return view('index');
 })->name('index')->middleware('auth');
 
+
 // Root route: redirect to index if authenticated, otherwise to login
 Route::get('/', function () {
     return Auth::check() ? redirect()->route('index') : redirect()->route('show.login');

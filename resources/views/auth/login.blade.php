@@ -1,4 +1,4 @@
-@section('title', 'Login')
+@section('title', 'Inloggen')
 
 <x-auth-layout>
   <div class="mt-10 flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">

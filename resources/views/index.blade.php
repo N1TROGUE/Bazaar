@@ -1,3 +1,5 @@
+@section('title', 'De Bazaar')
+
 <x-layout>
     <x-slot:heading>
         Welkom, {{ Auth::user()->name }}
