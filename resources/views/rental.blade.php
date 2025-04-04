@@ -1,12 +1,11 @@
-@section('title', 'De Bazaar')
+@section('title', 'Verhuur')
 
 <x-layout>
     <x-slot:heading>
-        Welkom, {{ Auth::user()->name }}
+        Verhuur
     </x-slot:heading>
     
     <h1> </h1>
-
 </x-layout>
 
 

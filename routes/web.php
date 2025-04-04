@@ -18,6 +18,11 @@ Route::get('/index', function () {
     return view('index');
 })->name('index')->middleware('auth');
 
+// Verhuur route
+Route::get('/rental', function () {
+    return view('rental');
+})->name('rental');
+
 
 // Root route: redirect to index if authenticated, otherwise to login
 Route::get('/', function () {

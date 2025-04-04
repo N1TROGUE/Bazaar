@@ -17,12 +17,12 @@
           </div>
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
-                <x-nav-link href="/" :active="request()->is('/')">Bazaar</x-nav-link>
-                <x-nav-link href="/" :active="request()->is('')">Verhuur</x-nav-link>
-                <x-nav-link href="/" :active="request()->is('')">Veilingen</x-nav-link> 
-                <x-nav-link href="/" :active="request()->is('')">Verkoop</x-nav-link>                
+                <x-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">Bazaar</x-nav-link>
+                <x-nav-link href="{{ route('rental') }}" :active="request()->routeIs('rental')">Verhuur</x-nav-link>
+                <x-nav-link href="#" :active="request()->routeIs('auctions')">Veilingen</x-nav-link>
+                <x-nav-link href="#" :active="request()->routeIs('sales')">Verkoop</x-nav-link>
             </div>
-          </div>
+        </div>        
         </div> 
         <div class="hidden md:block">
           <div class="ml-4 flex items-center md:ml-6">
@@ -52,11 +52,13 @@
       <h3 class="text-2xl font-bold tracking-tight text-gray-900">{{ $heading }}</h3>
     </div>
   </header>
+
   <main>
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
       {{ $slot }}
     </div>
   </main>
+
 </div>
 </body>
 </html>
