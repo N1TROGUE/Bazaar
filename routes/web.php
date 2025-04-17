@@ -23,6 +23,11 @@ Route::get('/rental', function () {
     return view('rental');
 })->name('rental');
 
+// Verhuur route
+Route::get('/contracten', function () {
+    return view('contracten');
+})->name('contracten');
+
 
 // Root route: redirect to index if authenticated, otherwise to login
 Route::get('/', function () {
