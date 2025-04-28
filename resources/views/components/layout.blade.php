@@ -17,13 +17,11 @@
           </div>
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
-                <x-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">Bazaar</x-nav-link>
-                <x-nav-link href="{{ route('rental') }}" :active="request()->routeIs('rental')">Verhuur</x-nav-link>
-                <x-nav-link href="#" :active="request()->routeIs('auctions')">Veilingen</x-nav-link>
-                <x-nav-link href="#" :active="request()->routeIs('sales')">Verkoop</x-nav-link>
-                <x-nav-link href="{{ route('contracten') }}" :active="request()->routeIs('contracten')">Contracten</x-nav-link>
+               <x-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">Bazaar</x-nav-link>
+               <x-nav-link href="{{ route('upload.contract') }}" :active="request()->routeIs('upload.contract')">Upload contract</x-nav-link>
+               <x-nav-link href="{{ route('export.registration') }}">Exporteer registratie</x-nav-link>
             </div>
-        </div>        
+        </div>                      
         </div> 
         <div class="hidden md:block">
           <div class="ml-4 flex items-center md:ml-6">

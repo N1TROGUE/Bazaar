@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContractController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,15 +19,12 @@ Route::get('/index', function () {
     return view('index');
 })->name('index')->middleware('auth');
 
-// Verhuur route
-Route::get('/rental', function () {
-    return view('rental');
-})->name('rental');
+// Contracten routes
+Route::get('/upload-contract', [ContractController::class, 'showContract'])->name('upload.contract');
+Route::get('/exporteer-contract', [ContractController::class, 'exportContract'])->name('export.registration');
 
-// Verhuur route
-Route::get('/contracten', function () {
-    return view('contracten');
-})->name('contracten');
+// Post route voor contracten uploaden
+Route::post('/contracts', [ContractController::class, 'storeContract'])->name('contracts.store');
 
 
 // Root route: redirect to index if authenticated, otherwise to login
