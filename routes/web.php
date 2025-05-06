@@ -26,6 +26,8 @@ Route::get('/exporteer-contract', [ContractController::class, 'exportContract'])
 // Post route voor contracten uploaden
 Route::post('/contracts', [ContractController::class, 'storeContract'])->name('contracts.store');
 
+// Get route voor pdf export
+Route::get('/contracts/export/{user}', [ContractController::class, 'downloadContractPdf'])->name('contracts.export.pdf');
 
 // Root route: redirect to index if authenticated, otherwise to login
 Route::get('/', function () {

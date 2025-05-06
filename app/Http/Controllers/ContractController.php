@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Contract;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
 
 class ContractController extends Controller
@@ -13,13 +14,6 @@ class ContractController extends Controller
     {
         $users = User::where('role_id', 3)->get(); // zakelijke gebruikers
         return view('contracts.upload-contract', compact('users'));
-    }
-
-    //GET
-    public function exportContract()
-    {
-       $users = User::where('role_id', 3)->get(); // zakelijke gebruikers 
-       return view('contracts.export-registration', compact('users'));
     }
 
     //POST
@@ -51,5 +45,20 @@ class ContractController extends Controller
         ]);
 
         return redirect()->route('index');
+    }
+
+    //GET
+    public function exportContract()
+    {
+       $users = User::where('role_id', 3)->get(); // zakelijke gebruikers 
+       return view('contracts.export-registration', compact('users'));
+    }
+
+    //GET
+    public function downloadContractPdf(User $user)
+    {
+        $pdf = FacadePdf::loadView('contracts.pdf-template', compact('user'));
+
+        return $pdf->download('registratie_' . $user->name . ' .pdf');
     }
 }
