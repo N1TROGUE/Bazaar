@@ -33,7 +33,7 @@ class ContractController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'user_id' => 'required|exists:users,id',
-            'file' => 'required|mimes:pdf|max:2048'
+            'file' => 'required|mimes:pdf|max:10240' // 10MB
         ], $messages);
 
         $path = $request->file('file')->store('contracts', 'public');
@@ -59,6 +59,6 @@ class ContractController extends Controller
     {
         $pdf = FacadePdf::loadView('contracts.pdf-template', compact('user'));
 
-        return $pdf->download('registratie_' . $user->name . ' .pdf');
+        return $pdf->download('registratie_' . $user->name . '.pdf');
     }
 }

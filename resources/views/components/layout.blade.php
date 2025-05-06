@@ -20,7 +20,7 @@
                <x-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">Bazaar</x-nav-link>
                
                <!-- Alleen zichtbaar voor admins -->
-              @if(Auth::check() && Auth::user()->role_id === 4)  <!-- Controleer of de gebruiker een admin is -->
+              @if(Auth::check() && Auth::user()->isAdmin())  <!-- Controleer of de gebruiker een admin is -->
                   <x-nav-link href="{{ route('upload.contract') }}" :active="request()->routeIs('upload.contract')">Upload contract</x-nav-link>
                   <x-nav-link href="{{ route('export.registration') }}" :active="request()->routeIs('export.registration')">Exporteer registratie</x-nav-link>
               @endif
