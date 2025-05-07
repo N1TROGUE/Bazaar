@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContractController;
+use App\Http\Middleware\CheckAdmin;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,11 +20,13 @@ Route::get('/index', function () {
     return view('index');
 })->name('index')->middleware('auth');
 
-// Verhuur route
-Route::get('/rental', function () {
-    return view('rental');
-})->name('rental');
-
+// Alleen toegankelijk voor admins
+Route::middleware([CheckAdmin::class])->group(function () {
+    Route::get('/upload-contract', [ContractController::class, 'showContract'])->name('upload.contract');
+    Route::get('/exporteer-contract', [ContractController::class, 'exportContract'])->name('export.registration');
+    Route::post('/contracts', [ContractController::class, 'storeContract'])->name('contracts.store');
+    Route::get('/contracts/export/{user}', [ContractController::class, 'downloadContractPdf'])->name('contracts.export.pdf');
+});
 
 // Root route: redirect to index if authenticated, otherwise to login
 Route::get('/', function () {

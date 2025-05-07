@@ -45,6 +45,7 @@ class AuthController extends Controller
             'role_id.required' => 'Het is verplicht een rol te kiezen'
         ];
 
+        // TODO: The register method uses Validator::make(). Consider using a Form Request class (e.g., RegisterUserRequest) for cleaner validation logic.
         // validatie handmatig
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',

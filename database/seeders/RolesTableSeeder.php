@@ -19,7 +19,7 @@ class RolesTableSeeder extends Seeder
             ['name' => 'geen'],
             ['name' => 'particulier'],
             ['name' => 'zakelijk'],
-            ['name' => 'admin'], 
+            ['name' => 'platform eigenaar'], 
         ]);
     }
     
