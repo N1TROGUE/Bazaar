@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('advertisements', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\User::class);
-            $table->foreignIdFor(\App\Models\AdvertisementCategory::class);
+            $table->foreignIdFor(\App\Models\AdvertisementCategory::class)->nullable();
             $table->foreignIdFor(\App\Models\AdvertisementImage::class);
 
             $table->string('title');
