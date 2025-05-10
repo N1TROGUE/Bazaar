@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContractController;
 use App\Http\Middleware\CheckAdmin;
@@ -16,9 +17,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Home route
-Route::get('/index', function () {
-    return view('index');
-})->name('index')->middleware('auth');
+Route::get('/index', [AdvertisementController::class, 'index'])->name('index')->middleware('auth');
 
 // Alleen toegankelijk voor admins
 Route::middleware([CheckAdmin::class])->group(function () {
