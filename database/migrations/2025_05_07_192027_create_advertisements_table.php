@@ -15,16 +15,16 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\User::class);
             $table->foreignIdFor(\App\Models\AdvertisementCategory::class)->nullable();
-            $table->foreignIdFor(\App\Models\AdvertisementImage::class);
 
             $table->string('title');
             $table->text('description')->nullable();
+            $table->string('image_path')->nullable();
             $table->decimal('price', 10, 2);
             $table->enum('ad_type', ['sale', 'rental']);
             $table->boolean('allow_bids')->default(false);
             $table->integer('rental_min_duration_hours')->nullable();
             $table->integer('rental_max_duration_hours')->nullable();
-            $table->enum('status', ['draft', 'active', 'inactive', 'sold', 'rented_out', 'expired', 'pending_approval'])->default('draft')->index();
+            $table->enum('status', ['active', 'inactive', 'sold', 'rented_out', 'expired'])->default('active')->index();
             $table->dateTime('expiration_date');
 
             $table->timestamps();
