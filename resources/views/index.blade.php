@@ -10,7 +10,7 @@
             <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                 @foreach($advertisements as $advertisement)
                     <a href="#" class="group">
-                        <img src="{{ Storage::disk('public')->url($advertisement->image_path) }}" alt="" class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8">
+                        <img src="{{ Storage::disk('public')->url($advertisement->image_path) }}" alt="" class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8 border-2">
                         <h3 class="mt-4 text-sm text-gray-700">{{ $advertisement->title }}</h3>
                         <p class="mt-1 text-lg font-medium text-gray-900">€{{ $advertisement->price }}</p>
                     </a>
