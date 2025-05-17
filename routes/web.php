@@ -19,6 +19,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Home route
 Route::get('/index', [AdvertisementController::class, 'index'])->name('index')->middleware('auth');
 
+Route::resource('advertisements', AdvertisementController::class)->middleware('auth');
+
 // Alleen toegankelijk voor admins
 Route::middleware([CheckAdmin::class])->group(function () {
     Route::get('/upload-contract', [ContractController::class, 'showContract'])->name('upload.contract');

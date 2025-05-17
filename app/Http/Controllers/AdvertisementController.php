@@ -14,4 +14,8 @@ class AdvertisementController extends Controller
             'advertisements' => $advertisements
         ]);
     }
+
+    public function show(Advertisement $advertisement) {
+        return view('advertisements.show', ['advertisement' => $advertisement]);
+    }
 }
