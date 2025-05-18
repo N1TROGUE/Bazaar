@@ -27,6 +27,11 @@ Route::middleware([CheckAdmin::class])->group(function () {
     Route::get('/contracts/export/{user}', [ContractController::class, 'downloadContractPdf'])->name('contracts.export.pdf');
 });
 
+// Advertentiebeheer
+Route::get('/advertenties/nieuw', [AdvertisementController::class, 'create'])->name('advertisements.create');
+Route::post('/advertenties', [AdvertisementController::class, 'store'])->name('advertisements.store');
+
+
 // Root route: redirect to index if authenticated, otherwise to login
 Route::get('/', function () {
     return Auth::check() ? redirect()->route('index') : redirect()->route('show.login');

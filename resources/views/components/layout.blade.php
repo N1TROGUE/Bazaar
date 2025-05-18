@@ -19,6 +19,11 @@
             <div class="ml-10 flex items-baseline space-x-4">
                <x-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">Bazaar</x-nav-link>
                
+               <!-- Alleen zicht voor adverteerders -->
+        
+               <x-nav-link href="{{ route('advertisements.create') }}" :active="request()->routeIs('advertisements.create')">Plaats advertentie</x-nav-link>
+             
+
                <!-- Alleen zichtbaar voor admins -->
               @if(Auth::check() && Auth::user()->isAdmin())  <!-- Controleer of de gebruiker een admin is -->
                   <x-nav-link href="{{ route('upload.contract') }}" :active="request()->routeIs('upload.contract')">Upload contract</x-nav-link>

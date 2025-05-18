@@ -11,7 +11,7 @@
           <div class="border-b border-gray-900/10 pb-12">
             <div class="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div class="sm:col-span-4">
-                <label for="username" class="block text-sm/6 font-medium text-gray-900">Naam</label>
+                <label for="username" class="block text-sm/6 font-medium text-gray-900">Naam <span style="color: red;"> *</span></label>
                 <div class="mt-2">
                   <div class="flex items-center rounded-md bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
                     <input type="text" name="name" id="name" class="block w-1/2 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-600 sm:text-sm/6" placeholder="Contract">
@@ -21,7 +21,7 @@
 
               <div class="sm:col-span-4">
                 <label for="user_id" class="block text-sm/6 font-medium text-gray-900">
-                  Selecteer een gebruiker
+                  Selecteer een gebruiker <span style="color: red;"> *</span>
                 </label>
                 <div class="mt-2">
                   <div class="flex items-center rounded-md bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
@@ -38,7 +38,7 @@
               </div>
       
               <div class="col-span-full">
-                <label for="cover-photo" class="block text-sm/6 font-medium text-gray-900">Upload contract</label>
+                <label for="cover-photo" class="block text-sm/6 font-medium text-gray-900">Upload contract <span style="color: red;"> *</span></label>
                 <div class="mt-2 flex justify-center w-1/2 rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                   <div class="text-center">
                     <svg class="mx-auto size-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon">
