@@ -4,6 +4,7 @@ use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContractController;
 use App\Http\Middleware\CheckAdmin;
+use App\Http\Middleware\CheckAdvertiser;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,10 +28,11 @@ Route::middleware([CheckAdmin::class])->group(function () {
     Route::get('/contracts/export/{user}', [ContractController::class, 'downloadContractPdf'])->name('contracts.export.pdf');
 });
 
-// Advertentiebeheer
-Route::get('/advertenties/nieuw', [AdvertisementController::class, 'create'])->name('advertisements.create');
-Route::post('/advertenties', [AdvertisementController::class, 'store'])->name('advertisements.store');
-
+// Alleen toegankelijk voor adverteerders (particulier of zakelijk)
+Route::middleware([CheckAdvertiser::class])->group(function () {
+    Route::get('/advertenties/nieuw', [AdvertisementController::class, 'create'])->name('advertisements.create');
+    Route::post('/advertenties', [AdvertisementController::class, 'store'])->name('advertisements.store');
+});
 
 // Root route: redirect to index if authenticated, otherwise to login
 Route::get('/', function () {

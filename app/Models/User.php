@@ -51,4 +51,10 @@ class User extends Authenticatable
     {
         return $this->role_id === 4; //
     }
+
+    public function isAdvertiser(): bool
+    {
+        return in_array($this->role_id, [2, 3]);
+    }
+
 }
