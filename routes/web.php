@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\FavoriteAdvertisementController;
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckAdvertiser;
 use Illuminate\Support\Facades\Route;
@@ -40,3 +41,5 @@ Route::middleware([CheckAdvertiser::class])->group(function () {
 Route::get('/', function () {
     return Auth::check() ? redirect()->route('index') : redirect()->route('show.login');
 });
+
+Route::post('/advertisements/{advertisement}/favorite', [FavoriteAdvertisementController::class, 'toggle'])->name('advertisements.favorite');

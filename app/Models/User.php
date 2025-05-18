@@ -57,4 +57,16 @@ class User extends Authenticatable
         return in_array($this->role_id, [2, 3]);
     }
 
+    /**
+     * The adverts that the user has favorited.
+     */
+    public function favoriteAdverts()
+    {
+        return $this->belongsToMany(Advertisement::class, 'favorite_advertisements', 'user_id', 'advertisement_id')->withTimestamps();
+    }
+
+    public function hasFavorited(Advertisement $advertisement): bool
+    {
+        return $this->favoriteAdverts()->where('advertisement_id', $advertisement->id)->exists();
+    }
 }

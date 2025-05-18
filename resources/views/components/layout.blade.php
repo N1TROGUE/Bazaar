@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Default Title')</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 <div class="min-h-full">
@@ -18,7 +20,7 @@
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
                <x-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">Bazaar</x-nav-link>
-               
+
                <!-- Alleen zicht voor adverteerders -->
                @if(Auth::check() && Auth::user()->isAdvertiser())  <!-- Controleer of de gebruiker een adverteerder is -->
                 <x-nav-link href="{{ route('advertisements.create') }}" :active="request()->routeIs('advertisements.create')">Plaats advertentie</x-nav-link>
@@ -31,8 +33,8 @@
               @endif
 
             </div>
-        </div>                      
-        </div> 
+        </div>
+        </div>
         <div class="hidden md:block">
           <div class="ml-4 flex items-center md:ml-6">
             @auth

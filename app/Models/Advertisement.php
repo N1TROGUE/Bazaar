@@ -13,8 +13,10 @@ class Advertisement extends Model
         return $this->belongsTo(AdvertisementCategory::class);
     }
 
-    public function images()
-    {
-        return $this->hasMany(AdvertisementImage::class);
+    /**
+     * The users that have favorited this advert.
+     */
+    public function favoritedByUsers() {
+        return $this->belongsToMany(User::class, 'favorite_advertisements', 'advertisement_id', 'user_id')->withTimestamps();
     }
 }
