@@ -84,7 +84,7 @@ class AdvertisementController extends Controller
         'expiration_date' => $request->expiration_date,
     ]);
 
-    return redirect()->route('index');
-}
+        return redirect()->route('advertisements.create')->with('success', 'U heeft successvol een advertentie geplaatst.');
+    }
 
 }
