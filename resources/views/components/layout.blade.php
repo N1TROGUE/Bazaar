@@ -20,10 +20,11 @@
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
                <x-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">Bazaar</x-nav-link>
-
-               <!-- Alleen zicht voor adverteerders -->
+               
+               <!-- Alleen zichtbaar voor adverteerders -->
                @if(Auth::check() && Auth::user()->isAdvertiser())  <!-- Controleer of de gebruiker een adverteerder is -->
                 <x-nav-link href="{{ route('advertisements.create') }}" :active="request()->routeIs('advertisements.create')">Plaats advertentie</x-nav-link>
+                <x-nav-link href="{{ route('advertisements.show') }}" :active="request()->routeIs('advertisements.show')">Mijn advertenties</x-nav-link>
                @endif
 
                <!-- Alleen zichtbaar voor admins -->
