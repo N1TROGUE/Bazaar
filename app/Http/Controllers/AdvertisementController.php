@@ -19,6 +19,12 @@ class AdvertisementController extends Controller
     }
 
     //GET
+    public function showAdvertisements()
+    {
+        return view('advertisements.my-advertisements');
+    }
+
+    //GET
     public function create()
     {
         $categories = AdvertisementCategory::all();
