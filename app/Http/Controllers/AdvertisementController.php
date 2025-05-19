@@ -6,6 +6,7 @@ use App\Models\Advertisement;
 use App\Models\AdvertisementCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class AdvertisementController extends Controller
 {
@@ -19,9 +20,14 @@ class AdvertisementController extends Controller
     }
 
     public function show(Advertisement $advertisement) {
-        return view('advertisements.show', ['advertisement' => $advertisement]);
+        $url = route('advertisements.show', $advertisement);
+        $qrCodeImage = QrCode::format('svg')->size(80)->generate($url);
+
+        return view('advertisements.show', [
+            'advertisement' => $advertisement,
+            'qrCodeImage' => $qrCodeImage
+        ]);
     }
-    
 
     //GET
     public function create()

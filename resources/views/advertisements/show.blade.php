@@ -28,18 +28,23 @@
                         <p class="mt-4 text-gray-600">{{ $advertisement->description }}</p>
                     </div>
 
-                    {{-- Terugknop --}}
-                    <div class="mt-6">
-                        {{-- Optionele extra gegevens --}}
-                        <div class="mt-8 space-y-2 text-sm text-gray-500">
-                            <p><strong>Geplaatst door:</strong> {{ $advertisement->user->name ?? 'Onbekend' }}</p>
-                            <p><strong>Geplaatst op:</strong> {{ $advertisement->created_at->format('d-m-Y') }}</p>
+                    {{-- Productdetails --}}
+                    <div class="mt-6 flex flex-row justify-between items-end">
+                        <div>
+                            {{-- Optionele extra gegevens --}}
+                            <div class="mt-8 space-y-2 text-sm text-gray-500">
+                                <p><strong>Geplaatst door:</strong> {{ $advertisement->user->name ?? 'Onbekend' }}</p>
+                                <p><strong>Geplaatst op:</strong> {{ $advertisement->created_at->format('d-m-Y') }}</p>
+                            </div>
+                            <div class="mt-6">
+                                <a href="{{ route('advertisements.index') }}"
+                                   class="inline-block px-4 py-2 text-md font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 transition">
+                                    {{ $advertisement->ad_type === 'sale' ? 'Kopen' : 'Huren' }}
+                                </a>
+                            </div>
                         </div>
-                        <div class="mt-6">
-                            <a href="{{ route('advertisements.index') }}"
-                               class="inline-block px-4 py-2 text-md font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 transition">
-                                {{ $advertisement->ad_type === 'sale' ? 'Kopen' : 'Huren' }}
-                            </a>
+                        <div>
+                            {!! $qrCodeImage !!}
                         </div>
                     </div>
                 </div>
