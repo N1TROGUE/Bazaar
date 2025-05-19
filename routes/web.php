@@ -39,7 +39,7 @@ Route::middleware([CheckAdmin::class])->group(function () {
 // Alleen toegankelijk voor adverteerders (particulier of zakelijk)
 Route::middleware([CheckAdvertiser::class])->group(function () {
     Route::get('/advertenties/nieuw', [AdvertisementController::class, 'create'])->name('advertisements.create');
-    Route::get('/mijn-advertenties', [AdvertisementController::class, 'showAdvertisements'])->name('advertisements.show');
+    Route::get('/mijn-advertenties', [AdvertisementController::class, 'showAdvertisements'])->name('advertisements.my');
     Route::post('/advertenties', [AdvertisementController::class, 'store'])->name('advertisements.store');
 });
 
