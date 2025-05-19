@@ -21,7 +21,11 @@ class AdvertisementController extends Controller
     //GET
     public function showAdvertisements()
     {
-        return view('advertisements.my-advertisements');
+        $advertisements = Advertisement::where('user_id', Auth::id())
+        ->orderBy('expiration_date', 'asc') // sorteer op aflooptijd
+        ->get();
+
+        return view('advertisements.my-advertisements', compact('advertisements'));
     }
 
     //GET
