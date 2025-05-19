@@ -17,14 +17,14 @@ class ReviewSeeder extends Seeder
             'user_id' => 1,
             'advertisement_id' => 1,
             'rating' => 5,
-            'comment' => 'Great product, highly recommend!'
+            'comment' => 'Geweldig product, zeker een aanrader!'
         ]);
 
         Review::create([
             'user_id' => 2,
             'advertisement_id' => 2,
             'rating' => 4,
-            'comment' => 'Good quality, but a bit expensive.'
+            'comment' => 'Goede kwaliteit, maar een beetje duur.'
         ]);
     }
 }
