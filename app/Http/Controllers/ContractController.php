@@ -44,7 +44,7 @@ class ContractController extends Controller
             'file_path' => $path
         ]);
 
-        return redirect()->route('index');
+        return redirect()->route('upload.contract')->with('success', 'U heeft successvol een contract aangemaakt.');
     }
 
     //GET

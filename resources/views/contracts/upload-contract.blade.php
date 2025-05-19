@@ -9,6 +9,13 @@
       @csrf
         <div class="space-y-12">
           <div class="border-b border-gray-900/10 pb-12">
+            <!-- Successmelding -->
+                    @if(session('success'))
+                        <div class="p-4 mb-4 bg-green-100 border-l-4 border-green-500 text-green-700 rounded-lg w-full sm:col-span-6">
+                            <p class="font-medium">{{ session('success') }}</p>
+                        </div>
+                    @endif
+                    
             <div class="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div class="sm:col-span-4">
                 <label for="username" class="block text-sm/6 font-medium text-gray-900">Naam <span style="color: red;"> *</span></label>
