@@ -8,6 +8,17 @@ class Advertisement extends Model
 {
     protected $guarded = [];
 
+    /**
+     * The user that owns the advertisement.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Category of the advertisement.
+     */
     public function category()
     {
         return $this->belongsTo(AdvertisementCategory::class);
