@@ -4,6 +4,7 @@ use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\FavoriteAdvertisementController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckAdvertiser;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +22,11 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Home route
 Route::get('/index', [AdvertisementController::class, 'index'])->name('index')->middleware('auth');
 
+// Advertisements routes
 Route::resource('advertisements', AdvertisementController::class)->middleware('auth');
+
+// Review routes
+Route::post('/advertisements/{advertisement}/review', [ReviewController::class, 'store'])->name('advertisements.review')->middleware('auth');
 
 // Alleen toegankelijk voor admins
 Route::middleware([CheckAdmin::class])->group(function () {

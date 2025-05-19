@@ -69,4 +69,14 @@ class User extends Authenticatable
     {
         return $this->favoriteAdverts()->where('advertisement_id', $advertisement->id)->exists();
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function hasReviewed(Advertisement $advertisement): bool
+    {
+        return $this->reviews()->where('advertisement_id', $advertisement->id)->exists();
+    }
 }

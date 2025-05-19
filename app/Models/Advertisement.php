@@ -30,4 +30,8 @@ class Advertisement extends Model
     public function favoritedByUsers() {
         return $this->belongsToMany(User::class, 'favorite_advertisements', 'advertisement_id', 'user_id')->withTimestamps();
     }
+
+    public function reviews() {
+        return $this->hasMany(Review::class);
+    }
 }

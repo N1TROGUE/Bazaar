@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
            UsersTableSeeder::class,
            AdvertisementCategorySeeder::class,
            AdvertisementSeeder::class,
-           FavoriteAdvertSeeder::class
+           FavoriteAdvertSeeder::class,
+           ReviewSeeder::class,
        ]);
     }
 }
