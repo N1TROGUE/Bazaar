@@ -19,14 +19,27 @@ class AdvertisementController extends Controller
     }
 
     //GET
-    public function showAdvertisements()
+    public function showAdvertisements(Request $request)
     {
-        $advertisements = Advertisement::where('user_id', Auth::id())
-        ->orderBy('expiration_date', 'asc') // sorteer op aflooptijd
-        ->get();
+        $query = Advertisement::where('user_id', Auth::id());
 
-        return view('advertisements.my-advertisements', compact('advertisements'));
+        // Filter op categorie
+        if ($request->filled('category_id')) {
+            $query->where('advertisement_category_id', $request->category_id);
+        }
+
+        // Sortering prijs
+        if ($request->filled('sort_price')) {
+            $query->orderBy('price', $request->sort_price); // asc of desc
+        }
+
+        $advertisements = $query->orderBy('expiration_date')->paginate(4);
+
+        $categories = \App\Models\AdvertisementCategory::all();
+
+        return view('advertisements.my-advertisements', compact('advertisements', 'categories'));
     }
+
 
     //GET
     public function create()
