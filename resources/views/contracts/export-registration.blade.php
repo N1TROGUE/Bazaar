@@ -24,8 +24,15 @@
                 @empty
                     <li class="px-6 py-4 text-gray-500">Geen zakelijke gebruikers gevonden.</li>
                 @endforelse
+
             </ul>
         </div>
+        @if ($users->hasPages())
+            <div class="mt-4 px-6">
+                {{ $users->links() }}
+            </div>
+        @endif
     </div>
+ 
 
 </x-layout>
