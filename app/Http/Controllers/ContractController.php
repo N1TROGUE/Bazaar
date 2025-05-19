@@ -50,9 +50,10 @@ class ContractController extends Controller
     //GET
     public function exportContract()
     {
-       $users = User::where('role_id', 3)->get(); // zakelijke gebruikers 
-       return view('contracts.export-registration', compact('users'));
+        $users = User::where('role_id', 3)->paginate(10); // 10 zakelijke gebruikers per pagina
+        return view('contracts.export-registration', compact('users'));
     }
+
 
     //GET
     public function downloadContractPdf(User $user)
