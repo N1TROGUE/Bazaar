@@ -44,6 +44,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
             </a>
+            
             <form action="{{ route('logout') }}" method="POST" class="relative ml-3 flex items-center">
               @csrf
               <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-500">
