@@ -9,6 +9,12 @@ class Advertisement extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'price' => 'decimal:2',
+        'allow_bids' => 'boolean',
+        'expiration_date' => 'datetime',
+    ];
+
     /**
      * The user that owns the advertisement.
      */
@@ -22,7 +28,7 @@ class Advertisement extends Model
      */
     public function category()
     {
-        return $this->belongsTo(AdvertisementCategory::class);
+        return $this->belongsTo(AdvertisementCategory::class, 'advertisement_category_id');
     }
 
     /**

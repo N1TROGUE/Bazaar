@@ -84,7 +84,7 @@
                     </div>
                 </div>
             </div>
-        </form>a
+        </form>
     </div>
 
     {{-- Flash messages for general success/error after redirect --}}
