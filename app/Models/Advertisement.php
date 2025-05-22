@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Advertisement extends Model
@@ -33,5 +34,29 @@ class Advertisement extends Model
 
     public function reviews() {
         return $this->hasMany(Review::class);
+    }
+
+    public function rentals() {
+        return $this->hasMany(Rental::class);
+    }
+
+    /**
+     * Check if the advertisement is available for rent during the specified period.
+     *
+     * @param Carbon $startDate
+     * @param Carbon $endDate
+     * @return bool
+     */
+    public function isAvailableForRent(Carbon $startDate, Carbon $endDate): bool
+    {
+        return !$this->rentals()->where(function ($query) use ($startDate, $endDate) {
+            // Check if the rental period overlaps with existing rentals
+            $query->whereBetween('rented_from', [$startDate, $endDate])
+                  ->orWhereBetween('rented_until', [$startDate, $endDate])
+                  ->orWhere(function ($query) use ($startDate, $endDate) {
+                      $query->where('rented_from', '<=', $startDate)
+                            ->where('rented_until', '>=', $endDate);
+                  });
+        })->exists();
     }
 }

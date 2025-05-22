@@ -37,7 +37,7 @@
                                 <p><strong>Geplaatst op:</strong> {{ $advertisement->created_at->format('d-m-Y') }}</p>
                             </div>
                             <div class="mt-6">
-                                <a href="{{ route('advertisements.index') }}"
+                                <a href="{{ $advertisement->ad_type === 'sale' ? back() : route('advertisements.rent', $advertisement) }}"
                                    class="inline-block px-4 py-2 text-md font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 transition">
                                     {{ $advertisement->ad_type === 'sale' ? 'Kopen' : 'Huren' }}
                                 </a>
@@ -50,6 +50,7 @@
                 </div>
             </div>
             <div>
+                {{-- Review form --}}
                 <h3 class="text-2xl font-bold text-gray-900">Reviews</h3>
                 <div class="max-w-xl flex flex-col gap-4 mt-2">
                     @if(! Auth::user()->hasReviewed($advertisement))
@@ -86,6 +87,7 @@
 
                     <hr class="border border-gray-300">
 
+                    {{-- Reviews van anderen --}}
                     <div class="mt-2">
                         @if ($advertisement->reviews->isEmpty())
                             <p class="text-gray-500 italic">Er zijn nog geen reviews voor dit product.</p>

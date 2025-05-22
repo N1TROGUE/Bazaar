@@ -79,4 +79,12 @@ class User extends Authenticatable
     {
         return $this->reviews()->where('advertisement_id', $advertisement->id)->exists();
     }
+
+    /**
+     * The advertisements that the user has rented.
+     */
+    public function rentals()
+    {
+        return $this->hasMany(Rental::class);
+    }
 }

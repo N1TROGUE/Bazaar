@@ -4,6 +4,7 @@ use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\FavoriteAdvertisementController;
+use App\Http\Controllers\RentalController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckAdvertiser;
@@ -46,6 +47,12 @@ Route::middleware([CheckAdvertiser::class])->group(function () {
 // Root route: redirect to index if authenticated, otherwise to login
 Route::get('/', function () {
     return Auth::check() ? redirect()->route('index') : redirect()->route('show.login');
+});
+
+// Rental routes
+Route::middleware('auth')->controller(RentalController::class)->group(function () {
+    Route::get('advertisements/{advertisement}/rent', 'create')->name('advertisements.rent');
+    Route::post('advertisements/{advertisement}/rent', 'store')->name('advertisements.rent.store');
 });
 
 Route::post('/advertisements/{advertisement}/favorite', [FavoriteAdvertisementController::class, 'toggle'])->name('advertisements.favorite');
