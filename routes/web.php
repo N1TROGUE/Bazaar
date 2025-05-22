@@ -3,6 +3,10 @@
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\FavoriteAdvertisementController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\RentalController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckAdvertiser;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +24,12 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Home route
 Route::get('/index', [AdvertisementController::class, 'index'])->name('index')->middleware('auth');
 
+// Advertisements routes
+Route::resource('advertisements', AdvertisementController::class)->middleware('auth');
+
+// Review routes
+Route::post('/advertisements/{advertisement}/review', [ReviewController::class, 'store'])->name('advertisements.review')->middleware('auth');
+
 // Alleen toegankelijk voor admins
 Route::middleware([CheckAdmin::class])->group(function () {
     Route::get('/upload-contract', [ContractController::class, 'showContract'])->name('upload.contract');
@@ -31,7 +41,7 @@ Route::middleware([CheckAdmin::class])->group(function () {
 // Alleen toegankelijk voor adverteerders (particulier of zakelijk)
 Route::middleware([CheckAdvertiser::class])->group(function () {
     Route::get('/advertenties/nieuw', [AdvertisementController::class, 'create'])->name('advertisements.create');
-    Route::get('/mijn-advertenties', [AdvertisementController::class, 'showAdvertisements'])->name('advertisements.show');
+    Route::get('/mijn-advertenties', [AdvertisementController::class, 'showAdvertisements'])->name('advertisements.my');
     Route::post('/advertenties', [AdvertisementController::class, 'store'])->name('advertisements.store');
 });
 
@@ -39,3 +49,15 @@ Route::middleware([CheckAdvertiser::class])->group(function () {
 Route::get('/', function () {
     return Auth::check() ? redirect()->route('index') : redirect()->route('show.login');
 });
+
+// Rental routes
+Route::middleware('auth')->controller(RentalController::class)->group(function () {
+    Route::get('advertisements/{advertisement}/rent', 'create')->name('advertisements.rent');
+    Route::post('advertisements/{advertisement}/rent', 'store')->name('advertisements.rent.store');
+});
+
+Route::middleware('auth')->controller(OrderController::class)->group(function () {
+   Route::get('/my-orders', 'index')->name('orders.index');
+});
+
+Route::post('/advertisements/{advertisement}/favorite', [FavoriteAdvertisementController::class, 'toggle'])->name('advertisements.favorite');

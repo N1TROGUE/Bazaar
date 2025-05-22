@@ -13,12 +13,21 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-         // Admin user
-         User::factory()->create([
-            'name' => 'Charaf Oualid',
-            'email' => 'admin@bazaar.local',
+        // Admin user
+        User::factory()->create([
+         'name' => 'Charaf Oualid',
+         'email' => 'admin@bazaar.local',
+         'password' => Hash::make('SterkWachtwoord123!'),
+         'role_id' => 4, // role of admin
+         'email_verified_at' => now(),
+        ]);
+
+        // Particuliere gebruiker
+        User::factory()->create([
+            'name' => 'Mohammed Bogatyrev',
+            'email' => 'particulier@bazaar.local',
             'password' => Hash::make('SterkWachtwoord123!'),
-            'role_id' => 4, // role of admin
+            'role_id' => 2, // role of particulier,
             'email_verified_at' => now(),
         ]);
     }
