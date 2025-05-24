@@ -10,6 +10,18 @@
             <x-success-message>{{ session('success') }}</x-success-message>
         @endif
         <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+            <div class="pb-8 flex justify-end">
+                <form method="GET" action="{{ route('index') }}">
+                    <label for="sort" class="block font-medium text-gray-700 mb-1">Sorteer op prijs</label>
+                    <x-select name="sort" id="sort" onchange="this.form.submit()">
+                        <option value="">-- Geen sortering --</option>
+                        <option value="price_asc" @if(request('sort') === 'price_asc') selected @endif>Prijs: Laag naar hoog</option>
+                        <option value="price_desc" @if(request('sort') === 'price_desc') selected @endif>Prijs: Hoog naar laag</option>
+                        <option value="date_desc" @if(request('sort') === 'date_desc') selected @endif>Datum: Nieuwste eerst</option>
+                        <option value="date_asc" @if(request('sort') === 'date_asc') selected @endif>Datum: Oudste eerst</option>
+                    </x-select>
+                </form>
+            </div>
             <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                 @foreach($advertisements as $advertisement)
                     <a href="{{ route('advertisements.show', $advertisement) }}" class="group">

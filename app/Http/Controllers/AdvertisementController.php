@@ -11,9 +11,28 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class AdvertisementController extends Controller
 {
     //GET
-    public function index()
+    public function index(Request $request)
     {
-        $advertisements = Advertisement::paginate(10);
+        $query = Advertisement::query();
+
+        if ($request->has('sort')) {
+            switch ($request->sort) {
+                case 'price_asc':
+                    $query->orderBy('price', 'asc');
+                    break;
+                case 'price_desc':
+                    $query->orderBy('price', 'desc');
+                    break;
+                case 'date_asc':
+                    $query->orderBy('created_at', 'asc');
+                    break;
+                case 'date_desc':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+            }
+        }
+
+        $advertisements = $query->paginate(10);
 
         return view('index', [
             'advertisements' => $advertisements
