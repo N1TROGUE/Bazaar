@@ -16,13 +16,27 @@
             @endif
 
             <div class="bg-white shadow-2xl rounded-lg border border-gray-300 overflow-hidden">
-                <div class="px-4 py-5 sm:px-6">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">
-                        Jouw aankopen
-                    </h3>
-                    <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                        Een overzicht van de items die je hebt gekocht.
-                    </p>
+                <div class="px-4 py-5 sm:px-6 flex flex-row items-start justify-between">
+                    <div>
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">
+                            Jouw aankopen
+                        </h3>
+                        <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                            Een overzicht van de items die je hebt gekocht.
+                        </p>
+                    </div>
+                    <div class="px-4 pb-2">
+                        <form method="GET" action="{{ route('orders.index') }}">
+                            <label for="sort" class="block text-sm font-medium text-gray-700 mb-1">Sorteer op prijs</label>
+                            <x-select name="sort" id="sort" onchange="this.form.submit()">
+                                <option value="">-- Geen sortering --</option>
+                                <option value="price_asc" @if(request('sort') === 'price_asc') selected @endif>Prijs: Laag naar hoog</option>
+                                <option value="price_desc" @if(request('sort') === 'price_desc') selected @endif>Prijs: Hoog naar laag</option>
+                                <option value="date_desc" @if(request('sort') === 'date_desc') selected @endif>Datum: Nieuwste eerst</option>
+                                <option value="date_asc" @if(request('sort') === 'date_asc') selected @endif>Datum: Oudste eerst</option>
+                            </x-select>
+                        </form>
+                    </div>
                 </div>
                 @if($orders->isEmpty())
                     <div class="border-t border-gray-200 px-4 py-5 sm:p-0 text-center">
