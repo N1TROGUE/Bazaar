@@ -35,8 +35,6 @@ class RentalController extends Controller
             return back()->withInput()->with('error_rent', 'Sorry, dit product is beschikbaar voor de gekozen periode.');
         }
 
-
-
         Rental::create([
             'user_id' => Auth::id(),
             'advertisement_id' => $advertisement->id,
@@ -46,5 +44,25 @@ class RentalController extends Controller
         ]);
 
         return redirect()->route('advertisements.index')->with('success', 'Huur succesvol bevestigd!');
+    }
+
+    public function handInRental(Request $request, Rental $rental)
+    {
+        $request->validate([
+            'handed_in_at' => ['required', 'date', 'after_or_equal:' . $rental->rented_until]
+        ], [
+            'handed_in_at.required' => 'De inleverdatum is verplicht.',
+            'handed_in_at.date' => 'De inleverdatum moet een geldige datum zijn.',
+            'handed_in_at.after_or_equal' => 'De inleverdatum moet op of na het einde van de huurperiode liggen.'
+        ]);
+
+        $handedInAt = Carbon::parse($request->input('handed_in_at'));
+
+        $rental->update([
+            'status' => 'completed',
+            'handed_in_at' => $handedInAt
+        ]);
+
+        return redirect()->route('advertisements.index')->with('success', 'Huur succesvol ingeleverd!');
     }
 }
