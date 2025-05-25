@@ -20,7 +20,8 @@ return new class extends Migration
             $table->timestamp('rented_from'); // Start date/time of rental
             $table->timestamp('rented_until'); // End date/time of rental
             $table->timestamp('returned_at')->nullable(); // Actual date/time product was returned
-            $table->enum('status', ['active', 'returned', 'overdue'])->default('active'); // Rental status
+            $table->unsignedTinyInteger('wear_percentage'); // 0-100
+            $table->enum('status', ['active', 'returned', 'overdue', 'worn_out'])->default('active'); // Rental status
             $table->timestamps();
         });
     }
