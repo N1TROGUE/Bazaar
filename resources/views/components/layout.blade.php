@@ -8,12 +8,12 @@
 </head>
 <body>
 <div class="min-h-full">
-  <nav class="bg-gray-800">
+  <nav style="background-color: {{ $appSettings->nav_color ?? '#1f2937' }}">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="flex h-16 items-center justify-between">
         <div class="flex items-center">
           <div class="shrink-0">
-            <img class="size-8" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+            <img class="size-8" src="{{ $appSettings->logo_path ?? 'https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500' }}" alt="Logo">
           </div>
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
@@ -47,8 +47,8 @@
 
             <form action="{{ route('logout') }}" method="POST" class="relative ml-3 flex items-center">
               @csrf
-              <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-500">
-                  Uitloggen
+              <button style="background-color: {{ $appSettings->button_color ?? '#4f46e5' }}" class="text-white px-4 py-2 rounded-lg">
+                Uitloggen
               </button>
             </form>
 
