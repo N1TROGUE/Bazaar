@@ -46,7 +46,7 @@ class RentalController extends Controller
         return redirect()->route('advertisements.index')->with('success', 'Huur succesvol bevestigd!');
     }
 
-    public function handInRental(Request $request, Rental $rental)
+    public function returnRental(Request $request, Rental $rental)
     {
         $request->validate([
             'handed_in_at' => ['required', 'date', 'after_or_equal:' . $rental->rented_until]
@@ -58,9 +58,17 @@ class RentalController extends Controller
 
         $handedInAt = Carbon::parse($request->input('handed_in_at'));
 
+        $currentWear = $rental->wear_percentage ?? 0;
+        $wearPercentage = $currentWear + $handedInAt->diffInDays($rental->rented_from);
+        $wearPercentage = min($wearPercentage, 100);
+        $status = $wearPercentage == 100 ? 'worn_out' : 'returned';
+
+        $currentWear = $rental->wear_percentage ?? 0;
+
         $rental->update([
-            'status' => 'completed',
-            'handed_in_at' => $handedInAt
+            'returned_at' => $handedInAt,
+            'wear_percentage' => $wearPercentage,
+            'status' => $status
         ]);
 
         return redirect()->route('advertisements.index')->with('success', 'Huur succesvol ingeleverd!');
