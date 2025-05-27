@@ -57,4 +57,50 @@ class User extends Authenticatable
         return in_array($this->role_id, [2, 3]);
     }
 
+    /**
+     * The adverts that the user has favorited.
+     */
+    public function favoriteAdverts()
+    {
+        return $this->belongsToMany(Advertisement::class, 'favorite_advertisements', 'user_id', 'advertisement_id')->withTimestamps();
+    }
+
+    public function hasFavorited(Advertisement $advertisement): bool
+    {
+        return $this->favoriteAdverts()->where('advertisement_id', $advertisement->id)->exists();
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function hasReviewed(Advertisement $advertisement): bool
+    {
+        return $this->reviews()->where('advertisement_id', $advertisement->id)->exists();
+    }
+
+    /**
+     * The advertisements that the user has rented.
+     */
+    public function rentals()
+    {
+        return $this->hasMany(Rental::class);
+    }
+
+    /**
+     * Get the orders placed by the user (as a buyer).
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'buyer_id');
+    }
+
+    /**
+     * Get the orders received by the user (as a seller).
+     */
+    public function sales()
+    {
+        return $this->hasMany(Order::class, 'seller_id');
+    }
 }
