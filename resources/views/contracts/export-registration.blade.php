@@ -14,7 +14,7 @@
                             <p class="text-sm font-medium text-gray-900">{{ $user->name }}</p>
                             <p class="text-sm text-gray-500">{{ $user->email }}</p>
                         </div>
-                        <a 
+                        <a style="background-color: {{ $appSettings->button_color ?? '#4f46e5' }}" 
                             href="{{ route('contracts.export.pdf', ['user' => $user->id]) }}" 
                             class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
