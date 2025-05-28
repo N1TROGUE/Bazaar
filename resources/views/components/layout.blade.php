@@ -63,7 +63,7 @@
 
                             <form action="{{ route('logout') }}" method="POST" class="relative ml-3 flex items-center">
                                 @csrf
-                                <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-500">
+                                <button style="background-color: {{ $appSettings->button_color ?? '#4f46e5' }}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-500">
                                     Uitloggen
                                 </button>
                             </form>
