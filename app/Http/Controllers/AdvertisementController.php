@@ -14,6 +14,7 @@ class AdvertisementController extends Controller
     public function index(Request $request)
     {
         $query = Advertisement::query();
+        $advertisementCategories = AdvertisementCategory::all();
 
         if ($request->has('sort')) {
             switch ($request->sort) {
@@ -29,13 +30,22 @@ class AdvertisementController extends Controller
                 case 'date_desc':
                     $query->orderBy('created_at', 'desc');
                     break;
+                default:
+                    $query->latest();
             }
+        }
+
+        if ($request->filled('filter')) {
+            $query->whereHas('category', function ($q) use ($request) {
+                $q->where('name', $request->filter);
+            });
         }
 
         $advertisements = $query->paginate(10);
 
         return view('index', [
-            'advertisements' => $advertisements
+            'advertisements' => $advertisements,
+            'advertisementCategories' => $advertisementCategories
         ]);
     }
 
