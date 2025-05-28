@@ -15,6 +15,12 @@ class AdvertisementController extends Controller
     {
         $query = Advertisement::query();
         $advertisementCategories = AdvertisementCategory::all();
+        $favoriteAdvertisements = collect();
+
+        if (Auth::check()) {
+            $user = Auth::user();
+            $favoriteAdvertisements = $user->favoriteAdvertisements()->get();
+        }
 
         if ($request->has('sort')) {
             switch ($request->sort) {
@@ -45,6 +51,7 @@ class AdvertisementController extends Controller
 
         return view('index', [
             'advertisements' => $advertisements,
+            'favoriteAdvertisements' => $favoriteAdvertisements,
             'advertisementCategories' => $advertisementCategories
         ]);
     }
