@@ -23,6 +23,8 @@
                         <div class="ml-10 flex items-baseline space-x-4">
                             <x-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">Bazaar</x-nav-link>
                             <x-nav-link href="{{ route('orders.index') }}" :active="request()->routeIs('orders.index')">Bestelgeschiedenis</x-nav-link>
+                            <x-nav-link href="{{ route('rented.show') }}" :active="request()->routeIs('rented.show')">Gehuurde producten</x-nav-link>
+
 
                             <!-- Alleen zichtbaar voor adverteerders -->
                             @if(Auth::check() && Auth::user()->isAdvertiser())
