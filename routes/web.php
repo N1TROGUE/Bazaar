@@ -55,6 +55,7 @@ Route::middleware([CheckAdminOrBusiness::class])->group(function () {
 Route::middleware([CheckAdvertiser::class])->group(function () {
     Route::get('/advertenties/nieuw', [AdvertisementController::class, 'create'])->name('advertisements.create');
     Route::get('/mijn-advertenties', [AdvertisementController::class, 'showAdvertisements'])->name('advertisements.my');
+    Route::get('/mijn-verhuringen', [RentalController::class, 'showRentals'])->name('rentals.show');
     Route::post('/advertenties', [AdvertisementController::class, 'store'])->name('advertisements.store');
 });
 

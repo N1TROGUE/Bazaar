@@ -33,6 +33,9 @@
                                 <x-nav-link href="{{ route('advertisements.my') }}"
                                             :active="request()->routeIs('advertisements.my')">Mijn advertenties
                                 </x-nav-link>
+                                <x-nav-link href="{{ route('rentals.show') }}"
+                                            :active="request()->routeIs('rentals.show')">Mijn verhuringen
+                                </x-nav-link>
                             @endif
 
                             <!-- Alleen zichtbaar voor admins -->
