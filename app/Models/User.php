@@ -52,6 +52,11 @@ class User extends Authenticatable
         return $this->role_id === 4; //
     }
 
+    public function isAdminOrBusiness(): bool
+    {
+        return in_array($this->role_id, [3, 4]);
+    }
+
     public function isAdvertiser(): bool
     {
         return in_array($this->role_id, [2, 3]);
@@ -102,5 +107,10 @@ class User extends Authenticatable
     public function sales()
     {
         return $this->hasMany(Order::class, 'seller_id');
+    }
+
+    public function settings()
+    {
+        return $this->hasOne(Settings::class);
     }
 }

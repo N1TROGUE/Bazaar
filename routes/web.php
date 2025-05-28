@@ -9,7 +9,9 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Middleware\CheckAdmin;
+use App\Http\Middleware\CheckAdminOrBusiness;
 use App\Http\Middleware\CheckAdvertiser;
+use App\Http\Middleware\CheckBusinessAdvertiser;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Sabberworm\CSS\Settings;
@@ -39,6 +41,12 @@ Route::middleware([CheckAdmin::class])->group(function () {
     Route::get('/exporteer-contract', [ContractController::class, 'exportContract'])->name('export.registration');
     Route::post('/contracts', [ContractController::class, 'storeContract'])->name('contracts.store');
     Route::get('/contracts/export/{user}', [ContractController::class, 'downloadContractPdf'])->name('contracts.export.pdf');
+    Route::get('/thema-instellingen', [SettingsController::class, 'showSettings'])->name('settings.show');
+    Route::post('/settings', [SettingsController::class, 'updateSettings'])->name('settings.update');
+});
+
+// Alleen toegankelijk voor zakelijke adverteerders
+Route::middleware([CheckAdminOrBusiness::class])->group(function () {
     Route::get('/thema-instellingen', [SettingsController::class, 'showSettings'])->name('settings.show');
     Route::post('/settings', [SettingsController::class, 'updateSettings'])->name('settings.update');
 });
