@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Settings;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -34,8 +35,11 @@ class SettingsController extends Controller
             'button_color' => 'required|string',
         ], $messages);
 
+        $user = Auth::user();
+
         // Haal de eerste instellingen op, of maak nieuwe aan
-        $settings = Settings::first() ?? new Settings();
+        $settings = Settings::firstOrNew(['user_id' => $user->id]);
+
 
         // Logo uploaden indien aanwezig
         if ($request->hasFile('logo')) {
@@ -49,6 +53,7 @@ class SettingsController extends Controller
         // Overige settings opslaan
         $settings->nav_color = $request->input('nav_color');
         $settings->button_color = $request->input('button_color');
+        $settings->user_id = $user->id;
 
         $settings->save();
 

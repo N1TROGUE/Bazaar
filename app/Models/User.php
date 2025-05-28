@@ -53,6 +53,11 @@ class User extends Authenticatable
         return $this->role_id === 4; //
     }
 
+    public function isAdminOrBusiness(): bool
+    {
+        return in_array($this->role_id, [3, 4]);
+    }
+
     public function isAdvertiser(): bool
     {
         return in_array($this->role_id, [2, 3]);
@@ -111,5 +116,10 @@ class User extends Authenticatable
     public function favoriteAdvertisements()
     {
         return $this->belongsToMany(Advertisement::class, 'favorite_advertisements', 'user_id', 'advertisement_id')->withTimestamps();
+    }
+
+    public function settings()
+    {
+        return $this->hasOne(Settings::class);
     }
 }

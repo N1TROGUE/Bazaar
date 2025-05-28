@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Advertisement;
+use App\Models\AdvertisementCategory;
 use App\Models\Rental;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -16,6 +17,65 @@ class RentalController extends Controller
     public function create(Advertisement $advertisement)
     {
         return view('rentals.create', ['advertisement' => $advertisement]);
+    }
+
+    public function showRentals(Request $request)
+    {
+        $query = Rental::with('advertisement')
+            ->whereHas('advertisement', function ($q) {
+                $q->where('user_id', Auth::id());
+            });
+
+        // Filter op categorie van de gekoppelde advertentie
+        if ($request->filled('category_id')) {
+            $query->whereHas('advertisement', function ($q) use ($request) {
+                $q->where('advertisement_category_id', $request->category_id);
+            });
+        }
+
+        // Sorteren op prijs van de gekoppelde advertentie
+        if ($request->filled('sort_price')) {
+            $query->join('advertisements', 'rentals.advertisement_id', '=', 'advertisements.id')
+                ->orderBy('advertisements.price', $request->sort_price)
+                ->select('rentals.*'); // om dubbele kolommen bij join te vermijden
+        } else {
+            // Standaard sortering op startdatum
+            $query->orderBy('rented_from');
+        }
+
+        $rentals = $query->paginate(4)->withQueryString(); // behoud filters bij paginering
+        $categories = AdvertisementCategory::all();
+
+        return view('rentals.my-rentals', compact('rentals', 'categories'));
+    }
+
+    public function showRented(Request $request)
+    {
+        $query = Rental::with('advertisement')
+            ->where('user_id', Auth::id()); 
+            
+
+        // Filter op categorie van de gekoppelde advertentie
+        if ($request->filled('category_id')) {
+            $query->whereHas('advertisement', function ($q) use ($request) {
+                $q->where('advertisement_category_id', $request->category_id);
+            });
+        }
+
+        // Sorteren op prijs van de gekoppelde advertentie
+        if ($request->filled('sort_price')) {
+            $query->join('advertisements', 'rentals.advertisement_id', '=', 'advertisements.id')
+                ->orderBy('advertisements.price', $request->sort_price)
+                ->select('rentals.*'); // om dubbele kolommen bij join te vermijden
+        } else {
+            // Standaard sortering op startdatum
+            $query->orderBy('rented_from');
+        }
+
+        $rentals = $query->paginate(4)->withQueryString(); // behoud filters bij paginering
+        $categories = AdvertisementCategory::all();
+
+        return view('rentals.rented', compact('rentals', 'categories'));
     }
 
     /**

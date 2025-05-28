@@ -78,7 +78,7 @@
                                             <div class="sm:flex sm:justify-between">
                                                 <div>
                                                     <h4 class="text-lg font-semibold text-indigo-600 hover:text-indigo-800">
-                                                        <a href="{{ route('advertisements.show', $order->advertisement->id) }}">
+                                                        <a style="color: {{ $appSettings->button_color ?? '#4f46e5' }}" href="{{ route('advertisements.show', $order->advertisement->id) }}">
                                                             {{ $order->advertisement->title }}
                                                         </a>
                                                     </h4>
