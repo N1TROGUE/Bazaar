@@ -25,9 +25,9 @@
                             Een overzicht van de items die je hebt gekocht.
                         </p>
                     </div>
-                    <div class="px-4 pb-2">
+                    <div class="pb-2 px-4 flex gap-8 justify-end">
                         <form method="GET" action="{{ route('orders.index') }}">
-                            <label for="sort" class="block text-sm font-medium text-gray-700 mb-1">Sorteer op prijs</label>
+                            <label for="sort" class="block font-medium text-gray-700 mb-1">Sorteer op prijs</label>
                             <x-select name="sort" id="sort" onchange="this.form.submit()">
                                 <option value="">-- Geen sortering --</option>
                                 <option value="price_asc" @if(request('sort') === 'price_asc') selected @endif>Prijs: Laag naar hoog</option>
@@ -35,6 +35,21 @@
                                 <option value="date_desc" @if(request('sort') === 'date_desc') selected @endif>Datum: Nieuwste eerst</option>
                                 <option value="date_asc" @if(request('sort') === 'date_asc') selected @endif>Datum: Oudste eerst</option>
                             </x-select>
+                            @if(request('filter'))
+                                <input type="hidden" name="filter" value="{{ request('filter') }}">
+                            @endif
+                        </form>
+                        <form method="GET" action="{{ route('orders.index') }}">
+                            <label for="filter" class="block font-medium text-gray-700 mb-1">Filter op categorie</label>
+                            <x-select name="filter" id="filter" onchange="this.form.submit()">
+                                <option value="">-- Geen filteroptie --</option>
+                                @foreach($advertisementCategories as $advertisementCategorie)
+                                    <option value="{{ $advertisementCategorie->name }}" @if(request('filter') === $advertisementCategorie->name) selected @endif>{{ $advertisementCategorie->name }}</option>
+                                @endforeach
+                            </x-select>
+                            @if(request('sort'))
+                                <input type="hidden" name="sort" value="{{ request('sort') }}">
+                            @endif
                         </form>
                     </div>
                 </div>

@@ -24,6 +24,7 @@
                         <div class="mt-4 text-xs text-gray-500">
                             <p><strong>Geplaatst door:</strong> {{ $advertisement->user->name ?? 'Onbekend' }}</p>
                             <p><strong>Geplaatst op:</strong> {{ $advertisement->created_at->format('d-m-Y') }}</p>
+                            <p><strong>Vervaldatum:</strong> {{ $advertisement->expiration_date->format('d-m-Y') }}</p>
                         </div>
                     </div>
 
@@ -52,6 +53,9 @@
                                     <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>
+                                @if(session('error_rent')) {{-- Specific error key for rental attempt --}}
+                                <p class="text-sm text-red-600 mb-3">{{ session('error_rent') }}</p>
+                                @endif
                             </div>
                         </div>
 
@@ -71,10 +75,6 @@
                                     </div>
                                 </dl>
                             </div>
-
-                            @if(session('error_rent')) {{-- Specific error key for rental attempt --}}
-                            <p class="text-sm text-red-600 mb-3">{{ session('error_rent') }}</p>
-                            @endif
                             <button type="submit"
                                     class="w-full px-6 py-3 text-lg font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
                                 Bevestig Huuraanvraag

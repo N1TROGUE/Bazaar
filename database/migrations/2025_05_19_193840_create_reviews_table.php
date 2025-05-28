@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade'); // User who wrote the review
             $table->foreignIdFor(Advertisement::class)->constrained()->onDelete('cascade'); // Advertisement in question
-            $table->unsignedTinyInteger('rating')->nullable(); // 1-5
+            $table->unsignedTinyInteger('rating'); // 1-5
             $table->text('comment')->nullable(); // Review comment
             $table->timestamps();
         });
