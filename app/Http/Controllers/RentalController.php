@@ -139,15 +139,16 @@ class RentalController extends Controller
 
         $currentWear = $rental->wear_percentage ?? 0;
 
-        $daysRentedDuration = $handedInAt->diffInDays($rental->rented_from, false);
+        logger(['rented_from' => $rental->rented_from]);
+
+        $daysRentedDuration = $rental->rented_from->diffInDays($handedInAt, false);
 
         $wearToAdd = max(0, $daysRentedDuration);
 
         $wearPercentage = $currentWear + $wearToAdd;
 
-        $wearPercentage = max(0, min($wearPercentage, 100));
-
         $status = $wearPercentage === 100 ? 'worn_out' : 'returned';
+        logger(['status' => $status]);
 
         $rental->update([
             'returned_at' => $handedInAt,
