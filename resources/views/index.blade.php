@@ -2,7 +2,11 @@
 
 <x-layout>
     <x-slot:heading>
-        Welkom, {{ Auth::user()->name }}
+        @if(isset($company))
+            Advertenties van {{ $company->name }}
+        @else
+            Welkom, {{ Auth::user()->name }}
+        @endif
     </x-slot:heading>
 
     <div class="bg-white">

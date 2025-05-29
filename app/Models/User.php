@@ -22,7 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role_id'
+        'role_id',
+        'slug'
     ];
 
     /**
@@ -48,6 +49,16 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function isAdmin(): bool
     {
         return $this->role_id === 4; //
@@ -61,6 +72,11 @@ class User extends Authenticatable
     public function isAdvertiser(): bool
     {
         return in_array($this->role_id, [2, 3]);
+    }
+
+    public function advertisements()
+    {
+        return $this->hasMany(Advertisement::class);
     }
 
     /**
@@ -122,4 +138,5 @@ class User extends Authenticatable
     {
         return $this->hasOne(Settings::class);
     }
+
 }

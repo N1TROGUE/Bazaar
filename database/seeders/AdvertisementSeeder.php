@@ -25,6 +25,7 @@ class AdvertisementSeeder extends Seeder
                 'allow_bids' => false,
                 'rental_min_duration_hours' => null,
                 'rental_max_duration_hours' => null,
+                'status' => 'active',
                 'expiration_date' => now()->addDays(30),
                 'created_at' => now(),
                 'updated_at' => now()
@@ -40,6 +41,7 @@ class AdvertisementSeeder extends Seeder
                 'allow_bids' => true,
                 'rental_min_duration_hours' => null,
                 'rental_max_duration_hours' => null,
+                'status' => 'active',
                 'expiration_date' => now()->addDays(30),
                 'created_at' => now(),
                 'updated_at' => now()
@@ -55,6 +57,7 @@ class AdvertisementSeeder extends Seeder
                 'allow_bids' => true,
                 'rental_min_duration_hours' => null,
                 'rental_max_duration_hours' => null,
+                'status' => 'active',
                 'expiration_date' => now()->addDays(30),
                 'created_at' => now(),
                 'updated_at' => now()
@@ -70,6 +73,7 @@ class AdvertisementSeeder extends Seeder
                 'allow_bids' => true,
                 'rental_min_duration_hours' => null,
                 'rental_max_duration_hours' => null,
+                'status' => 'active',
                 'expiration_date' => now()->addDays(30),
                 'created_at' => now(),
                 'updated_at' => now()
@@ -85,6 +89,7 @@ class AdvertisementSeeder extends Seeder
                 'allow_bids' => true,
                 'rental_min_duration_hours' => null,
                 'rental_max_duration_hours' => null,
+                'status' => 'active',
                 'expiration_date' => now()->addDays(30),
                 'created_at' => now(),
                 'updated_at' => now()
@@ -100,6 +105,7 @@ class AdvertisementSeeder extends Seeder
                 'allow_bids' => false,
                 'rental_min_duration_hours' => 5,
                 'rental_max_duration_hours' => 24,
+                'status' => 'active',
                 'expiration_date' => now()->addDays(30),
                 'created_at' => now(),
                 'updated_at' => now()
@@ -115,6 +121,7 @@ class AdvertisementSeeder extends Seeder
                 'allow_bids' => false,
                 'rental_min_duration_hours' => 720,
                 'rental_max_duration_hours' => 1680,
+                'status' => 'active',
                 'expiration_date' => now()->addDays(30),
                 'created_at' => now(),
                 'updated_at' => now()
