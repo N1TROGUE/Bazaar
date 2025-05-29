@@ -78,7 +78,6 @@
                         <div class="flex-shrink-0">
                             <form action="{{ route('rentals.return', $rental) }}" method="POST" class="mt-4 md:mt-0">
                                 @csrf
-                                <input type="hidden" name="handed_in_at" value="{{ now()->toDateString() }}">
                                 <x-form-button class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-md shadow">Terugbrengen</x-form-button>
                             </form>
                         </div>
