@@ -37,7 +37,7 @@
                                 <p><strong>Geplaatst op:</strong> {{ $advertisement->created_at->format('d-m-Y') }}</p>
                             </div>
                             <div class="mt-6">
-                                <a href="{{ $advertisement->ad_type === 'sale' ? back() : route('advertisements.rent', $advertisement) }}"
+                                <a style="background-color: {{ $appSettings->button_color ?? '#4f46e5' }}"  href="{{ $advertisement->ad_type === 'sale' ? back() : route('advertisements.rent', $advertisement) }}"
                                    class="inline-block px-4 py-2 text-md font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 transition">
                                     {{ $advertisement->ad_type === 'sale' ? 'Kopen' : 'Huren' }}
                                 </a>
@@ -60,7 +60,7 @@
                             <div class="mb-4">
                                 <label for="rating" class="block mb-2 font-medium text-gray-700">Rating:</label>
                                 <div class="relative">
-                                    <select id="rating" name="rating" class="block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm appearance-none">
+                                    <select style="--tw-ring-color: {{ $appSettings->button_color ?? '#4f46e5' }};" id="rating" name="rating" class="block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm appearance-none">
                                         <option value="" selected>- Selecteer een getal -</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -77,7 +77,7 @@
                             </div>
                             <div class="mb-4">
                                 <label for="comment" class="block mb-2 font-medium text-gray-700">Comment:</label>
-                                <textarea name="comment" id="comment" rows="4" class="rounded-md border border-gray-300 w-full p-4 focus:outline-none focus:ring-2 focus:ring-indigo-600"></textarea>
+                                <textarea style="--tw-ring-color: {{ $appSettings->button_color ?? '#4f46e5' }};" name="comment" id="comment" rows="4" class="rounded-md border border-gray-300 w-full p-4 focus:outline-none focus:ring-2 focus:ring-indigo-600"></textarea>
                             </div>
                             <div>
                                 <x-form-button class="w-full">Plaats review</x-form-button>

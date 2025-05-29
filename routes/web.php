@@ -3,14 +3,18 @@
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\FavoriteAdvertisementController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Middleware\CheckAdmin;
+use App\Http\Middleware\CheckAdminOrBusiness;
 use App\Http\Middleware\CheckAdvertiser;
+use App\Http\Middleware\CheckBusinessAdvertiser;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Sabberworm\CSS\Settings;
 
 // Auth routes
 Route::get('/register', [AuthController::class, 'showRegister'])->name('show.register');
@@ -24,6 +28,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Home route
 Route::get('/index', [AdvertisementController::class, 'index'])->name('index')->middleware('auth');
 
+// Alleen toegankelijk voor admin
 // Advertisements routes
 Route::resource('advertisements', AdvertisementController::class)->middleware('auth');
 
@@ -36,12 +41,21 @@ Route::middleware([CheckAdmin::class])->group(function () {
     Route::get('/exporteer-contract', [ContractController::class, 'exportContract'])->name('export.registration');
     Route::post('/contracts', [ContractController::class, 'storeContract'])->name('contracts.store');
     Route::get('/contracts/export/{user}', [ContractController::class, 'downloadContractPdf'])->name('contracts.export.pdf');
+    Route::get('/thema-instellingen', [SettingsController::class, 'showSettings'])->name('settings.show');
+    Route::post('/settings', [SettingsController::class, 'updateSettings'])->name('settings.update');
+});
+
+// Alleen toegankelijk voor zakelijke adverteerders
+Route::middleware([CheckAdminOrBusiness::class])->group(function () {
+    Route::get('/thema-instellingen', [SettingsController::class, 'showSettings'])->name('settings.show');
+    Route::post('/settings', [SettingsController::class, 'updateSettings'])->name('settings.update');
 });
 
 // Alleen toegankelijk voor adverteerders (particulier of zakelijk)
 Route::middleware([CheckAdvertiser::class])->group(function () {
     Route::get('/advertenties/nieuw', [AdvertisementController::class, 'create'])->name('advertisements.create');
     Route::get('/mijn-advertenties', [AdvertisementController::class, 'showAdvertisements'])->name('advertisements.my');
+    Route::get('/mijn-verhuringen', [RentalController::class, 'showRentals'])->name('rentals.show');
     Route::post('/advertenties', [AdvertisementController::class, 'store'])->name('advertisements.store');
 });
 
@@ -53,6 +67,7 @@ Route::get('/', function () {
 // Rental routes
 Route::middleware('auth')->controller(RentalController::class)->group(function () {
     Route::get('advertisements/{advertisement}/rent', 'create')->name('advertisements.rent');
+    Route::get('/gehuurde-producten', 'showRented')->name('rented.show');
     Route::post('advertisements/{advertisement}/rent', 'store')->name('advertisements.rent.store');
 });
 

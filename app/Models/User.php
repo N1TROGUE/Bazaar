@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -50,6 +51,11 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role_id === 4; //
+    }
+
+    public function isAdminOrBusiness(): bool
+    {
+        return in_array($this->role_id, [3, 4]);
     }
 
     public function isAdvertiser(): bool
@@ -102,5 +108,18 @@ class User extends Authenticatable
     public function sales()
     {
         return $this->hasMany(Order::class, 'seller_id');
+    }
+
+    /**
+     * The advertisements that the user has favorited.
+     */
+    public function favoriteAdvertisements()
+    {
+        return $this->belongsToMany(Advertisement::class, 'favorite_advertisements', 'user_id', 'advertisement_id')->withTimestamps();
+    }
+
+    public function settings()
+    {
+        return $this->hasOne(Settings::class);
     }
 }
