@@ -5,6 +5,10 @@
         Gehuurde producten
     </x-slot:heading>
 
+    @if($errors->any())
+        <x-error-message>{{ $errors->first() }}</x-error-message>
+    @endif
+
     @if($rentals->isEmpty())
         <p>Je hebt momenteel geen gehuurde producten.</p>
     @else
@@ -36,7 +40,7 @@
                                 <option value="desc" @if(request('sort_price') === 'desc') selected @endif>Hoog naar laag</option>
                             </select>
                         </div>
-                        
+
 
                         {{-- Filter knop --}}
                         <div class="ml-auto">
@@ -47,15 +51,39 @@
                     </div>
                 </form>
             @foreach($rentals as $rental)
-                <div class="border p-4 rounded shadow">
-                    <h2 class="text-lg font-semibold">
-                        <a href="{{ route('advertisements.show', $rental->advertisement->id) }}" class="text-blue-600 hover:underline">
-                            {{ $rental->advertisement->title }}
-                        </a>
-                    </h2>
-                    <p>Geleend op: <strong>{{ \Carbon\Carbon::parse($rental->rented_from)->format('d-m-Y') }}</strong></p>
-                    <p>Terugbrengen op: <strong>{{ \Carbon\Carbon::parse($rental->rented_until)->format('d-m-Y') }}</strong></p>
-                </div>
+                @if($rental->status === 'active')
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-end border border-gray-200 p-5 rounded-xl shadow bg-white gap-4">
+                        <div class="flex-shrink-0 mr-4">
+                            @if($rental->advertisement->image_path)
+                                <img src="{{ asset('storage/' . $rental->advertisement->image_path) }}" alt="{{ $rental->advertisement->title }}" class="w-32 h-32 object-cover rounded-lg">
+                            @else
+                                <div class="w-32 h-32 bg-gray-200 flex items-center justify-center rounded-lg text-gray-400">
+                                    No image
+                                </div>
+                            @endif
+                        </div>
+                        <div class="flex-1">
+                            <h2 class="text-lg font-semibold mb-2">
+                                <a href="{{ route('advertisements.show', $rental->advertisement->id) }}" class="text-indigo-600 hover:underline">
+                                    {{ $rental->advertisement->title }}
+                                </a>
+                            </h2>
+                            <p class="text-sm text-gray-700 mb-1">
+                                Geleend op: <strong class="font-medium">{{ \Carbon\Carbon::parse($rental->rented_from)->format('d-m-Y') }}</strong>
+                            </p>
+                            <p class="text-sm text-gray-700">
+                                Terugbrengen op: <strong class="font-medium">{{ \Carbon\Carbon::parse($rental->rented_until)->format('d-m-Y') }}</strong>
+                            </p>
+                        </div>
+                        <div class="flex-shrink-0">
+                            <form action="{{ route('rentals.return', $rental) }}" method="POST" class="mt-4 md:mt-0">
+                                @csrf
+                                <input type="hidden" name="handed_in_at" value="{{ now()->toDateString() }}">
+                                <x-form-button class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-md shadow">Terugbrengen</x-form-button>
+                            </form>
+                        </div>
+                    </div>
+                @endif
             @endforeach
         </div>
         @if ($rentals->hasPages())
