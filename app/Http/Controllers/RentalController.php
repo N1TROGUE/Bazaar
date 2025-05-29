@@ -145,7 +145,7 @@ class RentalController extends Controller
 
         $wearToAdd = max(0, $daysRentedDuration);
 
-        $wearPercentage = $currentWear + $wearToAdd;
+        $wearPercentage = min(100, $currentWear + $wearToAdd);
 
         $status = $wearPercentage === 100 ? 'worn_out' : 'returned';
         logger(['status' => $status]);
