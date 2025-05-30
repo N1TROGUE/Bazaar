@@ -57,9 +57,9 @@
                         <form action="{{ route('advertisements.review', $advertisement) }}" method="POST">
                             @csrf
                             <h4 class="text-lg font-semibold mb-4">Plaats een review</h4>
-                            <div class="relative mb-1.5">
+                            <div class="relative">
                                 <label for="rating" class="block mb-2 font-medium text-gray-700">Rating:</label>
-                                <div class="relative">
+                                <div class="relative mb-1.5">
                                     <select style="--tw-ring-color: {{ $appSettings->button_color ?? '#4f46e5' }};" id="rating" name="rating" class="block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm appearance-none">
                                         <option value="" selected>- Selecteer een getal -</option>
                                         <option value="1">1</option>
