@@ -76,10 +76,11 @@
                             </p>
                         </div>
                         <div class="flex-shrink-0">
-                            <form action="{{ route('rentals.return', $rental) }}" method="POST" class="mt-4 md:mt-0">
-                                @csrf
-                                <x-form-button class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-md shadow">Terugbrengen</x-form-button>
-                            </form>
+                            <a href="{{ route('rentals.confirmReturn', $rental) }}"
+                               style="background-color: {{ $appSettings->button_color ?? '#4f46e5' }}; color: white;"
+                               class="inline-block px-4 py-2 rounded-md shadow text-sm font-medium hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mt-4 md:mt-0">
+                                Terugbrengen
+                            </a>
                         </div>
                     </div>
                 @endif

@@ -125,15 +125,23 @@ class RentalController extends Controller
         return redirect()->route('advertisements.index')->with('success', 'Huur succesvol bevestigd!');
     }
 
+    /**
+     * Show the page to confirm returning a rental and upload an image.
+     */
+    public function confirmReturn(Rental $rental)
+    {
+        return view('rentals.confirm-return', compact('rental'));
+    }
+
     public function returnRental(Request $request, Rental $rental)
     {
-        // $request->validate([
-        //     'handed_in_at' => ['required', 'date', 'after_or_equal:' . $rental->rented_until]
-        // ], [
-        //     'handed_in_at.required' => 'De inleverdatum is verplicht.',
-        //     'handed_in_at.date' => 'De inleverdatum moet een geldige datum zijn.',
-        //     'handed_in_at.after_or_equal' => 'De inleverdatum moet op of na het einde van de huurperiode liggen.'
-        // ]);
+        $request->validate([
+            'return_image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Validate the image
+        ], [
+            'return_image.image' => 'Het bestand moet een afbeelding zijn.',
+            'return_image.mimes' => 'De afbeelding moet een JPG, JPEG, of PNG bestand zijn.',
+            'return_image.max' => 'De afbeelding mag niet groter zijn dan 2MB.',
+        ]);
 
         $handedInAt = Carbon::now();
 
@@ -147,10 +155,17 @@ class RentalController extends Controller
 
         $status = $wearPercentage === 100 ? 'worn_out' : 'returned';
 
+        $returnImagePath = $rental->image_path;
+
+        if ($request->hasFile('return_image')) {
+            $returnImagePath = $request->file('return_image')->store('return_images', 'public');
+        }
+
         $rental->update([
             'returned_at' => $handedInAt,
             'wear_percentage' => $wearPercentage,
-            'status' => $status
+            'status' => $status,
+            'image_path' => $returnImagePath,
         ]);
 
         return redirect()->route('advertisements.index')->with('success', 'Huur succesvol ingeleverd!');

@@ -67,10 +67,11 @@ Route::get('/', function () {
 
 // Rental routes
 Route::middleware('auth')->controller(RentalController::class)->group(function () {
-    Route::get('advertisements/{advertisement}/rent', 'create')->name('advertisements.rent');
+    Route::get('/advertisements/{advertisement}/rent', 'create')->name('advertisements.rent');
     Route::get('/gehuurde-producten', 'showRented')->name('rented.show');
-    Route::post('advertisements/{advertisement}/rent', 'store')->name('advertisements.rent.store');
-    Route::post('gehuurde-producten/{rental}/return', 'returnRental')->name('rentals.return');
+    Route::post('/advertisements/{advertisement}/rent', 'store')->name('advertisements.rent.store');
+    Route::get('/gehuurde-producten/{rental}/confirm-return', 'confirmReturn')->name('rentals.confirmReturn');
+    Route::post('/gehuurde-producten/{rental}/return', 'returnRental')->name('rentals.return');
 });
 
 Route::middleware('auth')->controller(OrderController::class)->group(function () {
