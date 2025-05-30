@@ -65,4 +65,41 @@ class Advertisement extends Model
                   });
         })->exists();
     }
+
+    /**
+     * Scope a query to filter and sort advertisements based on request parameters.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilterAndSort($query, $request)
+    {
+        if ($request->has('sort')) {
+            switch ($request->sort) {
+                case 'price_asc':
+                    $query->orderBy('price', 'asc');
+                    break;
+                case 'price_desc':
+                    $query->orderBy('price', 'desc');
+                    break;
+                case 'date_asc':
+                    $query->orderBy('created_at', 'asc');
+                    break;
+                case 'date_desc':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+                default:
+                    $query->latest();
+            }
+        }
+
+        if ($request->filled('filter')) {
+            $query->whereHas('category', function ($q) use ($request) {
+                $q->where('name', $request->filter);
+            });
+        }
+
+        return $query;
+    }
 }

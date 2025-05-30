@@ -13,41 +13,16 @@ class AdvertisementController extends Controller
     //GET
     public function index(Request $request)
     {
-        $query = Advertisement::query();
+        $query = Advertisement::query()->where('status', 'active')->filterAndSort($request);
+        $advertisements = $query->paginate(10);
         $advertisementCategories = AdvertisementCategory::all();
         $favoriteAdvertisements = collect();
-
-        if (Auth::check()) {
-            $user = Auth::user();
-            $favoriteAdvertisements = $user->favoriteAdvertisements()->get();
-        }
-
-        if ($request->has('sort')) {
-            switch ($request->sort) {
-                case 'price_asc':
-                    $query->orderBy('price', 'asc');
-                    break;
-                case 'price_desc':
-                    $query->orderBy('price', 'desc');
-                    break;
-                case 'date_asc':
-                    $query->orderBy('created_at', 'asc');
-                    break;
-                case 'date_desc':
-                    $query->orderBy('created_at', 'desc');
-                    break;
-                default:
-                    $query->latest();
-            }
-        }
 
         if ($request->filled('filter')) {
             $query->whereHas('category', function ($q) use ($request) {
                 $q->where('name', $request->filter);
             });
         }
-
-        $advertisements = $query->paginate(10);
 
         return view('index', [
             'advertisements' => $advertisements,

@@ -4,7 +4,7 @@
     <x-slot:heading>
         Stel uw thema in
     </x-slot:heading>
-    
+
     <form method="POST" action="{{ route('settings.update') }}" enctype="multipart/form-data">
         @csrf
         <div class="space-y-12">
@@ -60,6 +60,27 @@
                         </div>
                     </div>
 
+                    {{-- Landingspagina URL --}}
+                    <div class="sm:col-span-4">
+                        <label for="company_slug" class="block mb-2 text-sm/6 font-medium text-gray-700">Custom URL:</label>
+
+                        <div class="mt-1 flex rounded-md shadow-sm">
+                            <span
+                                class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                                {{ url('/company/') }}/
+                            </span>
+                            <input type="text" name="company_slug" id="company_slug"
+                                   value="{{ old('company_slug', Auth::user()->slug) }}"
+                                   class="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 @error('company_slug') border-red-500 @enderror"
+                                   placeholder="jouw-bedrijfsnaam">
+                        </div>
+
+                        @error('company_slug')
+                            <x-form-error>{{ $message }}</x-form-error>
+                        @enderror
+
+                        <p class="mt-2 text-xs text-gray-500">Gebruik alleen letters, cijfers, streepjes (-) en underscores (_). Dit wordt onderdeel van je unieke URL.</p>
+                    </div>
                 </div>
             </div>
 
@@ -77,7 +98,7 @@
             <button type="button" class="text-sm/6 font-semibold text-gray-900">Annuleren</button>
             <button style="background-color: {{ $appSettings->button_color ?? '#4f46e5' }}" type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2">Opslaan</button>
         </div>
-        
+
 
     </form>
 </x-layout>

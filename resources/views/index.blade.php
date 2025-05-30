@@ -2,7 +2,11 @@
 
 <x-layout>
     <x-slot:heading>
-        Welkom, {{ Auth::user()->name }}
+        @if(isset($company))
+            Advertenties van {{ $company->name }}
+        @else
+            Welkom, {{ Auth::user()->name }}
+        @endif
     </x-slot:heading>
 
     <div class="bg-white">
@@ -14,7 +18,7 @@
             <div class="flex flex-row justify-between items-center">
                 <h2 class="text-2xl font-bold text-gray-900">Laatste Advertenties</h2>
                 <div class="pb-8 flex gap-8 justify-end">
-                    <form method="GET" action="{{ route('index') }}">
+                    <form method="GET" action="{{ isset($company) ? route('company.landing', $company->slug) : route('index') }}">
                         <label for="sort" class="block font-medium text-gray-700 mb-1">Sorteer op prijs</label>
                         <x-select name="sort" id="sort" onchange="this.form.submit()">
                             <option value="">-- Geen sortering --</option>
@@ -29,7 +33,7 @@
                         @endif
                     </form>
 
-                    <form method="GET" action="{{ route('index') }}">
+                    <form method="GET" action="{{ isset($company) ? route('company.landing', $company->slug) : route('index') }}">
                         <label for="filter" class="block font-medium text-gray-700 mb-1">Filter op categorie</label>
 
                         <x-select name="filter" id="filter" onchange="this.form.submit()">
