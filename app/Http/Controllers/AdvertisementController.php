@@ -75,6 +75,16 @@ class AdvertisementController extends Controller
     //POST
     public function store(Request $request)
     {
+        //Maximaal 4 adv
+        $userAdCount = Advertisement::where('user_id', Auth::id())
+            ->where('status', 'active')
+            ->count();
+
+        if($userAdCount >= 4)
+        {
+            return redirect()->back()->withErrors(['max_ads' => 'U heeft het maximum van 4 actieve advertenties al bereikt.'])->withInput();
+        }
+
         $messages = [
             'title.required' => 'Titel is verplicht.',
             'title.string' => 'Titel moet een geldige tekst zijn.',
