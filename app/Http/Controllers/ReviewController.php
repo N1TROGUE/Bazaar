@@ -12,8 +12,14 @@ class ReviewController extends Controller
     public function store(Request $request, Advertisement $advertisement)
     {
         $request->validate([
-           'rating' => ['integer', 'between:1,5'],
-           'comment' => ['string', 'max:255']
+            'rating' => ['required', 'integer', 'between:1,5'],
+            'comment' => ['nullable', 'string', 'max:255']
+        ], [
+            'rating.required' => 'Rating is verplicht.',
+            'rating.integer' => 'Rating moet een getal zijn.',
+            'rating.between' => 'Rating moet tussen 1 en 5 zijn.',
+            'comment.string' => 'Opmerking moet tekst zijn.',
+            'comment.max' => 'Opmerking mag maximaal 255 tekens bevatten.'
         ]);
 
         if (Auth::user()->hasReviewed($advertisement))
