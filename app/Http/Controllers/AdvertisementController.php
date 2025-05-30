@@ -18,6 +18,11 @@ class AdvertisementController extends Controller
         $advertisementCategories = AdvertisementCategory::all();
         $favoriteAdvertisements = collect();
 
+        if (Auth::check()) {
+            $user = Auth::user();
+            $favoriteAdvertisements = $user->favoriteAdvertisements()->get();
+        }
+
         if ($request->filled('filter')) {
             $query->whereHas('category', function ($q) use ($request) {
                 $q->where('name', $request->filter);
