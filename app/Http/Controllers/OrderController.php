@@ -19,6 +19,7 @@ class OrderController extends Controller
         $query = Auth::user()->orders()->latest();
         $advertisementCategories = AdvertisementCategory::all();
 
+        // TODO: Move into function
         if ($request->has('sort')) {
             switch ($request->sort) {
                 case 'price_asc':

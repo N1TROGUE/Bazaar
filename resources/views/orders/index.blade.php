@@ -103,6 +103,17 @@
                                                             Onbekend
                                                         @endif
                                                     </p>
+                                                    @if(Auth::user()->hasReviewedUser($order->seller)) {{-- This will be the review by Auth::id() due to eager loading --}}
+                                                        <div class="flex items-center mt-1 {{-- For sm:text-right alignment --}} @if(isset($order->seller)) sm:justify-end @endif">
+                                                            <span class="text-sm text-gray-500 mr-1">Beoordeling verkoper:</span>
+                                                            <span class="text-yellow-400">
+                                                                @for ($s = 1; $s <= 5; $s++)
+                                                                    <i class="{{ $s <= Auth::user()->getSellerReviewRating($order->seller) ? 'fa-solid' : 'fa-regular' }} fa-star"></i>
+                                                                @endfor
+                                                            </span>
+                                                            <span class="ml-1 text-xs text-gray-500">({{ Auth::user()->getSellerReviewRating($order->seller) }}/5)</span>
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="mt-3 sm:flex sm:justify-between items-center">

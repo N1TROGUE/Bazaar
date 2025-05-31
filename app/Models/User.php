@@ -169,4 +169,27 @@ class User extends Authenticatable
 
         return true;
     }
+
+    /**
+     * Check if the user has written a review for the given user (seller).
+     *
+     * @param User $seller
+     * @return bool
+     */
+    public function hasReviewedUser(User $seller): bool
+    {
+        return $this->writtenSellerReviews()->where('seller_id', $seller->id)->exists();
+    }
+
+    /**
+     * Get the rating given by this user to a specific seller, or null if not reviewed.
+     *
+     * @param User $seller
+     * @return int|null
+     */
+    public function getSellerReviewRating(User $seller): ?int
+    {
+        $review = $this->writtenSellerReviews()->where('seller_id', $seller->id)->first();
+        return $review->rating ?? null;
+    }
 }
