@@ -20,7 +20,7 @@ class AdvertisementController extends Controller
 
         if (Auth::check()) {
             $user = Auth::user();
-            $favoriteAdvertisements = $user->favoriteAdvertisements()->get();
+            $favoriteAdvertisements = $user->favoriteAdvertisements()->where('status', 'active')->get();
         }
 
         if ($request->filled('filter')) {

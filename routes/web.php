@@ -75,6 +75,8 @@ Route::middleware('auth')->controller(RentalController::class)->group(function (
 });
 
 Route::middleware('auth')->controller(OrderController::class)->group(function () {
+   Route::get('/advertisements/{advertisement}/order', 'create')->name('order.create');
+   Route::post('/advertisements/{advertisement}/order', 'store')->name('order.store');
    Route::get('/my-orders', 'index')->name('orders.index');
 });
 

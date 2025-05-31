@@ -37,7 +37,8 @@
                                 <p><strong>Geplaatst op:</strong> {{ $advertisement->created_at->format('d-m-Y') }}</p>
                             </div>
                             <div class="mt-6">
-                                <a style="background-color: {{ $appSettings->button_color ?? '#4f46e5' }}"  href="{{ $advertisement->ad_type === 'sale' ? back() : route('advertisements.rent', $advertisement) }}"
+                                <a style="background-color: {{ $appSettings->button_color ?? '#4f46e5' }}"
+                                   href="{{ $advertisement->ad_type === 'sale' ? route('order.create', $advertisement) : route('advertisements.rent', $advertisement) }}"
                                    class="inline-block px-4 py-2 text-md font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 transition">
                                     {{ $advertisement->ad_type === 'sale' ? 'Kopen' : 'Huren' }}
                                 </a>
