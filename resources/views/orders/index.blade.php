@@ -96,7 +96,7 @@
                                                     <p class="text-sm text-gray-500">
                                                         Verkoper:
                                                         @if(!empty($order->seller) && !empty($order->seller->name))
-                                                            <a href="{{ route('users.show', $order->seller->id) }}" class="text-indigo-600 hover:underline">
+                                                            <a href="{{ route('user-review.create', $order) }}" class="text-indigo-600 hover:underline">
                                                                 {{ $order->seller->name }}
                                                             </a>
                                                         @else

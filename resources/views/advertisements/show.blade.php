@@ -63,11 +63,11 @@
                                 <div class="relative mb-1.5">
                                     <select style="--tw-ring-color: {{ $appSettings->button_color ?? '#4f46e5' }};" id="rating" name="rating" class="block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm appearance-none">
                                         <option value="" selected>- Selecteer een getal -</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
+                                        <option value="5" {{ old('rating') == 5 ? 'selected' : '' }}>5</option>
+                                        <option value="4" {{ old('rating') == 4 ? 'selected' : '' }}>4</option>
+                                        <option value="3" {{ old('rating') == 3 ? 'selected' : '' }}>3</option>
+                                        <option value="2" {{ old('rating') == 2 ? 'selected' : '' }}>2</option>
+                                        <option value="1" {{ old('rating') == 1 ? 'selected' : '' }}>1</option>
                                     </select>
                                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                                         <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

@@ -38,7 +38,8 @@ Route::resource('advertisements', AdvertisementController::class)->middleware('a
 Route::post('/advertisements/{advertisement}/review', [ReviewController::class, 'store'])->name('advertisements.review')->middleware('auth');
 
 // User review route
-Route::get('/my-orders/{order}/review-seller', [UserReviewController::class, 'show'])->name('user.review')->middleware('auth');
+Route::get('/my-orders/{order}/review-seller', [UserReviewController::class, 'createFromOrder'])->name('user-review.create')->middleware('auth');
+Route::post('/my-orders/{order}/review-seller', [UserReviewController::class, 'storeFromOrder'])->name('user-review.store')->middleware('auth');
 
 // Alleen toegankelijk voor admins
 Route::middleware([CheckAdmin::class])->group(function () {
