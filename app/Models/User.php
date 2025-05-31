@@ -144,7 +144,7 @@ class User extends Authenticatable
      */
     public function reviewsAsSeller()
     {
-        return $this->hasMany(SellerReview::class, 'seller_id');
+        return $this->hasMany(UserReview::class, 'seller_id');
     }
 
     /**
@@ -152,13 +152,21 @@ class User extends Authenticatable
      */
     public function writtenSellerReviews()
     {
-        return $this->hasMany(SellerReview::class, 'reviewer_id');
+        return $this->hasMany(UserReview::class, 'reviewer_id');
     }
 
-    
-    public function hasReviewedSellerForOrder(Order $order): bool
+    public function canReviewSeller(Order $order): bool
     {
-        return $this->writtenSellerReviews()->where('order_id', $order->id)->exists();
-    }
+        // User must be the buyer and not the seller
+        if ($this->id !== $order->buyer_id || $this->id === $order->seller_id) {
+            return false;
+        }
 
+        // Prevent reviewing the same seller more than once
+        if ($this->writtenSellerReviews()->where('seller_id', $order->seller_id)->exists()) {
+            return false;
+        }
+
+        return true;
+    }
 }

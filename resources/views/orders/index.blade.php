@@ -94,7 +94,14 @@
                                                         Betaald: €{{ number_format($order->final_price, 2, ',', '.') }}
                                                     </p>
                                                     <p class="text-sm text-gray-500">
-                                                        Verkoper: {{ $order->seller->name ?? 'Onbekend' }}
+                                                        Verkoper:
+                                                        @if(!empty($order->seller) && !empty($order->seller->name))
+                                                            <a href="{{ route('users.show', $order->seller->id) }}" class="text-indigo-600 hover:underline">
+                                                                {{ $order->seller->name }}
+                                                            </a>
+                                                        @else
+                                                            Onbekend
+                                                        @endif
                                                     </p>
                                                 </div>
                                             </div>

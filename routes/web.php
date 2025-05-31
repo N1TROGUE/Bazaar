@@ -9,6 +9,7 @@ use App\Http\Controllers\FavoriteAdvertisementController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\UserReviewController;
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckAdminOrBusiness;
 use App\Http\Middleware\CheckAdvertiser;
@@ -33,8 +34,11 @@ Route::get('/index', [AdvertisementController::class, 'index'])->name('index')->
 // Advertisements routes
 Route::resource('advertisements', AdvertisementController::class)->middleware('auth');
 
-// Review routes
+// Advertisement review route
 Route::post('/advertisements/{advertisement}/review', [ReviewController::class, 'store'])->name('advertisements.review')->middleware('auth');
+
+// User review route
+Route::get('/my-orders/{order}/review-seller', [UserReviewController::class, 'show'])->name('user.review')->middleware('auth');
 
 // Alleen toegankelijk voor admins
 Route::middleware([CheckAdmin::class])->group(function () {
