@@ -139,4 +139,26 @@ class User extends Authenticatable
         return $this->hasOne(Settings::class);
     }
 
+    /**
+     * Get the reviews received by the user as a seller.
+     */
+    public function reviewsAsSeller()
+    {
+        return $this->hasMany(SellerReview::class, 'seller_id');
+    }
+
+    /**
+     * Get the reviews written by the user.
+     */
+    public function writtenSellerReviews()
+    {
+        return $this->hasMany(SellerReview::class, 'reviewer_id');
+    }
+
+    
+    public function hasReviewedSellerForOrder(Order $order): bool
+    {
+        return $this->writtenSellerReviews()->where('order_id', $order->id)->exists();
+    }
+
 }
