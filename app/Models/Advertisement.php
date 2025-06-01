@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
 
 class Advertisement extends Model
 {
@@ -101,5 +103,47 @@ class Advertisement extends Model
         }
 
         return $query;
+    }
+
+    public function canPlaceBid(): ?RedirectResponse
+    {
+        if ($this->ad_type !== 'sale') {
+            return back()->with('error', 'Op dit item kan niet geboden worden (alleen voor verkoop items).');
+        }
+
+        if ($this->status !== 'active') {
+            return back()->with('error', 'Bieden op dit item is niet meer mogelijk (niet actief).');
+        }
+
+        if ($this->user_id === Auth::id()) {
+            return back()->with('error', 'Je kunt niet op je eigen advertentie bieden.');
+        }
+
+        if ($this->auction_ends_at && $this->auction_ends_at->isPast()) {
+            return back()->with('error', 'De veiling voor dit item is afgelopen.');
+        }
+
+        return null;
+    }
+
+    public function bids()
+    {
+        return $this->hasMany(Bid::class)->orderBy('amount', 'desc');
+    }
+
+    /**
+     * Get the highest bid for this advertisement.
+     */
+    public function highestBid()
+    {
+        return $this->bids()->orderBy('amount', 'desc')->first();
+    }
+
+
+    public function getMinimumNextBid(): float
+    {
+        $highestBid = $this->highestBid();
+        $currentPrice = $highestBid ? $highestBid->amount : $this->price;
+        return (float) $currentPrice + 0.01;
     }
 }

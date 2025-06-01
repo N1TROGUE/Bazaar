@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BidController;
 use App\Http\Controllers\CompanyLandingPageController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\SettingsController;
@@ -88,4 +89,8 @@ Route::middleware('auth')->controller(OrderController::class)->group(function ()
 // Company landing page route
 Route::get('/company/{slug}', [CompanyLandingPageController::class, 'show'])->name('company.landing')->middleware('auth'); // Public route for the company landing page
 
+// Advertisements favorite route
 Route::post('/advertisements/{advertisement}/favorite', [FavoriteAdvertisementController::class, 'toggle'])->name('advertisements.favorite');
+
+// Advertisements bid route
+Route::post('/advertisements/{advertisement}/bid', [BidController::class, 'store'])->name('bid.store')->middleware('auth');

@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\User::class);
             $table->foreignIdFor(\App\Models\AdvertisementCategory::class)->nullable();
-
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('image_path')->nullable();
             $table->decimal('price', 10, 2);
+            $table->decimal('lowest_bid', 10, 2)->nullable();
             $table->enum('ad_type', ['sale', 'rental']);
             $table->boolean('allow_bids')->default(false);
             $table->integer('rental_min_duration_hours')->nullable();

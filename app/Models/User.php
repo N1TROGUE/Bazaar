@@ -192,4 +192,9 @@ class User extends Authenticatable
         $review = $this->writtenSellerReviews()->where('seller_id', $seller->id)->first();
         return $review->rating ?? null;
     }
+
+    public function bids()
+    {
+        return $this->hasMany(Bid::class, 'bidder_id');
+    }
 }
