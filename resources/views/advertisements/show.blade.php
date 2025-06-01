@@ -125,7 +125,7 @@
                                         <h4 class="text-lg font-semibold mb-4">Reviews van anderen</h4>
                                         <div class="flex flex-col gap-4">
                                             @foreach($advertisement->reviews as $review)
-                                                <div class="p-4 rounded-lg border border-gray-300">
+                                                <div class="p-4 rounded-xl border border-gray-300">
                                                     <div class="font-semibold">{{ $review->user->name }}</div>
                                                     <div class="flex items-center gap-2">
                                     <span class="text-yellow-400">
@@ -148,7 +148,7 @@
                         </div>
                         @if($advertisement->ad_type === 'sale')
                             {{-- Bieden (Auction) Section --}}
-                            <div class="border border-gray-300 rounded-lg p-4 mb-auto">
+                            <div class="border border-gray-300 rounded-xl p-4 mb-auto">
                                 <h2 class="text-2xl font-bold text-gray-900">Bieden</h2>
                                 <div>
                                     {{-- Active Advertisement --}}
@@ -183,7 +183,7 @@
                                                     <label for="bid_amount" class="block font-medium text-gray-700">
                                                         Jouw bod (min. €{{ number_format($minimumNextBid, 2, ',', '.') }})
                                                     </label>
-                                                    <div class="mt-1 flex rounded-md shadow-sm">
+                                                    <div class="mt-1 flex rounded-xl shadow-sm">
                                                         <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">€</span>
                                                         <input type="number" name="amount" id="bid_amount" step="0.01"
                                                                value="{{ old('amount', number_format($minimumNextBid, 2, '.', '')) }}"
