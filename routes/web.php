@@ -8,6 +8,7 @@ use App\Http\Controllers\CompanyLandingPageController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\FavoriteAdvertisementController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\ReviewController;
@@ -21,7 +22,10 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Sabberworm\CSS\Settings;
 
-// Auth routes
+
+Route::middleware(['web', \App\Http\Middleware\SetLocale::class])->group(function () {
+
+    // Auth routes
 Route::get('/register', [AuthController::class, 'showRegister'])->name('show.register');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
@@ -102,3 +106,9 @@ Route::get('/api/advertenties', [AdvertisementApiController::class, 'index']);
 // Advertisements bid route
 Route::post('/advertisements/{advertisement}/bid', [BidController::class, 'store'])->name('bid.store')->middleware('auth');
 
+//lang
+Route::get('lang/{locale}', [LanguageController::class, 'switch'])->name('lang.switch');
+
+
+
+});
