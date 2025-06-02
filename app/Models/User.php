@@ -139,4 +139,62 @@ class User extends Authenticatable
         return $this->hasOne(Settings::class);
     }
 
+    /**
+     * Get the reviews received by the user as a seller.
+     */
+    public function reviewsAsSeller()
+    {
+        return $this->hasMany(UserReview::class, 'seller_id');
+    }
+
+    /**
+     * Get the reviews written by the user.
+     */
+    public function writtenSellerReviews()
+    {
+        return $this->hasMany(UserReview::class, 'reviewer_id');
+    }
+
+    public function canReviewSeller(Order $order): bool
+    {
+        // User must be the buyer and not the seller
+        if ($this->id !== $order->buyer_id || $this->id === $order->seller_id) {
+            return false;
+        }
+
+        // Prevent reviewing the same seller more than once
+        if ($this->writtenSellerReviews()->where('seller_id', $order->seller_id)->exists()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Check if the user has written a review for the given user (seller).
+     *
+     * @param User $seller
+     * @return bool
+     */
+    public function hasReviewedUser(User $seller): bool
+    {
+        return $this->writtenSellerReviews()->where('seller_id', $seller->id)->exists();
+    }
+
+    /**
+     * Get the rating given by this user to a specific seller, or null if not reviewed.
+     *
+     * @param User $seller
+     * @return int|null
+     */
+    public function getSellerReviewRating(User $seller): ?int
+    {
+        $review = $this->writtenSellerReviews()->where('seller_id', $seller->id)->first();
+        return $review->rating ?? null;
+    }
+
+    public function bids()
+    {
+        return $this->hasMany(Bid::class, 'bidder_id');
+    }
 }
