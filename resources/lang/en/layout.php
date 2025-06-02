@@ -8,10 +8,10 @@ return [
     'nav' => [
         'bazaar' => 'Bazaar',
         'order_history' => 'Order History',
-        'rented_products' => 'Rented Products',
-        'place_ad' => 'Place Advertisement',
+        'rented_products' => 'Rented Prod.',
+        'place_ad' => 'Place Advert.',
         'csv' => 'CSV',
-        'my_ads' => 'My Advertisements',
+        'my_ads' => 'My Advert.',
         'my_rentals' => 'My Rentals',
         'upload_contract' => 'Upload Contract',
         'export_registration' => 'Export Registration',

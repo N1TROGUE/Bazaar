@@ -7,11 +7,11 @@ return [
 
     'nav' => [
         'bazaar' => 'Bazaar',
-        'order_history' => 'Bestelgeschiedenis',
-        'rented_products' => 'Gehuurde producten',
-        'place_ad' => 'Plaats advertentie',
+        'order_history' => 'Aankopen',
+        'rented_products' => 'Gehuurd',
+        'place_ad' => 'Plaats advert.',
         'csv' => 'CSV',
-        'my_ads' => 'Mijn advertenties',
+        'my_ads' => 'Mijn advert.',
         'my_rentals' => 'Mijn verhuur',
         'upload_contract' => 'Upload contract',
         'export_registration' => 'Exporteer registratie',
