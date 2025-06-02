@@ -30,13 +30,16 @@
                             @if(Auth::check() && Auth::user()->isAdvertiser())
                                 <!-- Controleer of de gebruiker een adverteerder is -->
                                 <x-nav-link href="{{ route('advertisements.create') }}"
-                                            :active="request()->routeIs('advertisements.create')">Plaats advertentie
+                                            :active="request()->routeIs('advertisements.create')">Plaats advert.
+                                </x-nav-link>
+                                <x-nav-link href="{{ route('csv.show') }}"
+                                            :active="request()->routeIs('csv.show')">CSV
                                 </x-nav-link>
                                 <x-nav-link href="{{ route('advertisements.my') }}"
-                                            :active="request()->routeIs('advertisements.my')">Mijn advertenties
+                                            :active="request()->routeIs('advertisements.my')">Mijn advert.
                                 </x-nav-link>
                                 <x-nav-link href="{{ route('rentals.show') }}"
-                                            :active="request()->routeIs('rentals.show')">Mijn verhuringen
+                                            :active="request()->routeIs('rentals.show')">Mijn verhur.
                                 </x-nav-link>
                             @endif
 

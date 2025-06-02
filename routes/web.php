@@ -15,6 +15,7 @@ use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckAdminOrBusiness;
 use App\Http\Middleware\CheckAdvertiser;
 use App\Http\Middleware\CheckBusinessAdvertiser;
+use App\Models\Advertisement;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Sabberworm\CSS\Settings;
@@ -63,6 +64,8 @@ Route::middleware([CheckAdvertiser::class])->group(function () {
     Route::get('/advertenties/nieuw', [AdvertisementController::class, 'create'])->name('advertisements.create');
     Route::get('/mijn-advertenties', [AdvertisementController::class, 'showAdvertisements'])->name('advertisements.my');
     Route::get('/mijn-verhuringen', [RentalController::class, 'showRentals'])->name('rentals.show');
+    Route::get('/upload-csv', [AdvertisementController::class, 'showCSV'])->name('csv.show');
+    Route::post('/advertisements/upload-csv', [AdvertisementController::class, 'uploadCSV'])->name('advertisements.uploadCSV');
     Route::post('/advertenties', [AdvertisementController::class, 'store'])->name('advertisements.store');
 });
 

@@ -75,11 +75,11 @@
                                     </div>
                                 </dl>
                             </div>
-                            <button type="submit"
+                            <button style="background-color: {{ $appSettings->button_color ?? '#4f46e5' }}" type="submit"
                                     class="w-full px-6 py-3 text-lg font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
                                 Bevestig Huuraanvraag
                             </button>
-                            <a href="{{ url()->previous() }}" class="mt-3 block text-center text-sm text-indigo-600 hover:text-indigo-500">Annuleren</a>
+                            <a style="color: {{ $appSettings->button_color ?? '#4f46e5' }}" href="{{ url()->previous() }}" class="mt-3 block text-center text-sm text-indigo-600 hover:text-indigo-500">Annuleren</a>
                         </div>
                     </div>
                 </div>
