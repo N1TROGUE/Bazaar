@@ -39,7 +39,7 @@
                                     <label for="rented_from" class="block text-sm font-medium text-gray-700 mb-1">Startdatum</label>
                                     <input type="date" name="rented_from" id="rented_from"
                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('rented_from') border-red-500 @enderror"
-                                           value="{{ old('rented_from', now()->toDateString()) }}" min="{{ now()->toDateString() }}" required>
+                                           value="{{ old('rented_from', now()->toDateString()) }}" min="{{ now()->toDateString() }}">
                                     @error('rented_from')
                                     <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                                     @enderror
@@ -48,7 +48,7 @@
                                     <label for="rented_until" class="block text-sm font-medium text-gray-700 mb-1">Einddatum</label>
                                     <input type="date" name="rented_until" id="rented_until"
                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('rented_until') border-red-500 @enderror"
-                                           value="{{ old('rented_until') }}" min="{{ now()->toDateString() }}" required>
+                                           value="{{ old('rented_until') }}" min="{{ now()->toDateString() }}">
                                     @error('rented_until')
                                     <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                                     @enderror

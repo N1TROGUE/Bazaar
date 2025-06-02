@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\Api\AdvertisementApiController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BidController;
 use App\Http\Controllers\CompanyLandingPageController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\SettingsController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\FavoriteAdvertisementController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\UserReviewController;
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckAdminOrBusiness;
 use App\Http\Middleware\CheckAdvertiser;
@@ -34,8 +36,12 @@ Route::get('/index', [AdvertisementController::class, 'index'])->name('index')->
 // Advertisements routes
 Route::resource('advertisements', AdvertisementController::class)->middleware('auth');
 
-// Review routes
+// Advertisement review route
 Route::post('/advertisements/{advertisement}/review', [ReviewController::class, 'store'])->name('advertisements.review')->middleware('auth');
+
+// User review route
+Route::get('/my-orders/{order}/review-seller', [UserReviewController::class, 'createFromOrder'])->name('user-review.create')->middleware('auth');
+Route::post('/my-orders/{order}/review-seller', [UserReviewController::class, 'storeFromOrder'])->name('user-review.store')->middleware('auth');
 
 // Alleen toegankelijk voor admins
 Route::middleware([CheckAdmin::class])->group(function () {
@@ -68,20 +74,28 @@ Route::get('/', function () {
 
 // Rental routes
 Route::middleware('auth')->controller(RentalController::class)->group(function () {
-    Route::get('advertisements/{advertisement}/rent', 'create')->name('advertisements.rent');
+    Route::get('/advertisements/{advertisement}/rent', 'create')->name('advertisements.rent');
     Route::get('/gehuurde-producten', 'showRented')->name('rented.show');
-    Route::post('advertisements/{advertisement}/rent', 'store')->name('advertisements.rent.store');
-    Route::post('gehuurde-producten/{rental}/return', 'returnRental')->name('rentals.return');
+    Route::post('/advertisements/{advertisement}/rent', 'store')->name('advertisements.rent.store');
+    Route::get('/gehuurde-producten/{rental}/confirm-return', 'confirmReturn')->name('rentals.confirmReturn');
+    Route::post('/gehuurde-producten/{rental}/return', 'returnRental')->name('rentals.return');
 });
 
 Route::middleware('auth')->controller(OrderController::class)->group(function () {
+   Route::get('/advertisements/{advertisement}/order', 'create')->name('order.create');
+   Route::post('/advertisements/{advertisement}/order', 'store')->name('order.store');
    Route::get('/my-orders', 'index')->name('orders.index');
 });
 
 // Company landing page route
 Route::get('/company/{slug}', [CompanyLandingPageController::class, 'show'])->name('company.landing')->middleware('auth'); // Public route for the company landing page
 
+// Advertisements favorite route
 Route::post('/advertisements/{advertisement}/favorite', [FavoriteAdvertisementController::class, 'toggle'])->name('advertisements.favorite');
 
 //API
 Route::get('/api/advertenties', [AdvertisementApiController::class, 'index']);
+
+// Advertisements bid route
+Route::post('/advertisements/{advertisement}/bid', [BidController::class, 'store'])->name('bid.store')->middleware('auth');
+
