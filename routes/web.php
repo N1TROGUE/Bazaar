@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdvertisementController;
+use App\Http\Controllers\Api\AdvertisementApiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CompanyLandingPageController;
 use App\Http\Controllers\ContractController;
@@ -81,3 +82,6 @@ Route::middleware('auth')->controller(OrderController::class)->group(function ()
 Route::get('/company/{slug}', [CompanyLandingPageController::class, 'show'])->name('company.landing')->middleware('auth'); // Public route for the company landing page
 
 Route::post('/advertisements/{advertisement}/favorite', [FavoriteAdvertisementController::class, 'toggle'])->name('advertisements.favorite');
+
+//API
+Route::get('/api/advertenties', [AdvertisementApiController::class, 'index']);
