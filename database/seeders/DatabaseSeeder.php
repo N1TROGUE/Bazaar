@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             FavoriteAdvertSeeder::class,
             ReviewSeeder::class,
             OrderSeeder::class,
-            RentalSeeder::class
+            RentalSeeder::class,
+            RelatedAdvertisementSeeder::class
         ]);
     }
 }

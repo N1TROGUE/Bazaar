@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Advertisement;
 use App\Models\AdvertisementCategory;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -73,8 +74,13 @@ class AdvertisementController extends Controller
     //GET
     public function create()
     {
+        $allAdvertisements = Auth::user()->advertisements()->where('status', 'active')->orderBy('title')->get();
+
         $categories = AdvertisementCategory::all();
-        return view('advertisements.create-advertisement', compact('categories'));
+        return view('advertisements.create-advertisement', [
+            'categories' => $categories,
+            'allAdvertisements' => $allAdvertisements,
+        ]);
     }
 
     //POST
@@ -99,7 +105,7 @@ class AdvertisementController extends Controller
             'rental_max_duration_hours.required_if' => 'Maximale huurperiode is verplicht bij een huuradvertentie.',
             'expiration_date.required' => 'Vervaldatum is verplicht.',
             'expiration_date.date' => 'Vervaldatum moet een geldige datum zijn.',
-            'expiration_date.after' => 'Vervaldatum moet in de toekomst liggen.'
+            'expiration_date.after' => 'Vervaldatum moet in de toekomst liggen.',
         ];
 
         $request->validate([
@@ -112,11 +118,13 @@ class AdvertisementController extends Controller
             'rental_min_duration_hours' => 'required_if:ad_type,rental|nullable|integer',
             'rental_max_duration_hours' => 'required_if:ad_type,rental|nullable|integer',
             'expiration_date' => 'required|date|after:today',
+            'related_advertisements' => 'nullable|array',
+            'related_advertisements.*' => 'nullable|integer|exists:advertisements,id',
         ], $messages);
 
         $imagePath = $request->file('image_path')->store('advert_images', 'public');
 
-        Advertisement::create([
+        $advertisement = Advertisement::create([
             'title' => $request->title,
             'description' => $request->description,
             'advertisement_category_id' => $request->advertisement_category_id,
@@ -129,6 +137,12 @@ class AdvertisementController extends Controller
             'status' => 'active',
             'expiration_date' => $request->expiration_date,
         ]);
+
+        if ($request->has('related_advertisements')) {
+            $advertisement->relatedAdvertisements()->sync($request->input('related_advertisements'));
+        } else {
+            $advertisement->relatedAdvertisements()->detach();
+        }
 
         return redirect()->route('advertisements.create')->with('success', 'U heeft successvol een advertentie geplaatst.');
     }

@@ -8,7 +8,7 @@
 
         <div class="flex flex-row justify-evenly pt-16">
             <div class="max-w-4xl pr-4 sm:pr-6 lg:pr-8">
-                <div class="flex flex-col gap-9">
+                <div class="flex flex-col gap-20">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                         {{-- Productafbeelding --}}
                         <div class="relative">
@@ -205,6 +205,27 @@
                             </div>
                         @endif
                     </div>
+
+                    {{-- Related Advertisements Section --}}
+                    @if($advertisement->relatedAdvertisements && $advertisement->relatedAdvertisements->isNotEmpty())
+                        <div class="mt-12 pt-8 border-t border-gray-200">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-6">Gerelateerde Advertenties</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
+                                @foreach($advertisement->relatedAdvertisements as $relatedAd)
+                                    <a href="{{ route('advertisements.show', $relatedAd) }}" class="group">
+                                        <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8 border-2">
+                                            <img src="{{ Storage::disk('public')->url($relatedAd->image_path) }}"
+                                                 alt="{{ $relatedAd->title }}"
+                                                 class="h-full w-full object-cover object-center group-hover:opacity-75">
+                                        </div>
+                                        <h4 class="mt-4 text-sm text-gray-700">{{ $relatedAd->title }}</h4>
+                                        <p class="mt-1 text-lg font-medium text-gray-900">€{{ number_format($relatedAd->price, 2, ',', '.') }}</p>
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+
                 </div>
             </div>
         </div>

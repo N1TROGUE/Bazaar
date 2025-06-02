@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 
@@ -36,15 +37,18 @@ class Advertisement extends Model
     /**
      * The users that have favorited this advert.
      */
-    public function favoritedByUsers() {
+    public function favoritedByUsers()
+    {
         return $this->belongsToMany(User::class, 'favorite_advertisements', 'advertisement_id', 'user_id')->withTimestamps();
     }
 
-    public function reviews() {
+    public function reviews()
+    {
         return $this->hasMany(Review::class);
     }
 
-    public function rentals() {
+    public function rentals()
+    {
         return $this->hasMany(Rental::class);
     }
 
@@ -60,11 +64,11 @@ class Advertisement extends Model
         return !$this->rentals()->where(function ($query) use ($startDate, $endDate) {
             // Check if the rental period overlaps with existing rentals
             $query->whereBetween('rented_from', [$startDate, $endDate])
-                  ->orWhereBetween('rented_until', [$startDate, $endDate])
-                  ->orWhere(function ($query) use ($startDate, $endDate) {
-                      $query->where('rented_from', '<=', $startDate)
-                            ->where('rented_until', '>=', $endDate);
-                  });
+                ->orWhereBetween('rented_until', [$startDate, $endDate])
+                ->orWhere(function ($query) use ($startDate, $endDate) {
+                    $query->where('rented_from', '<=', $startDate)
+                        ->where('rented_until', '>=', $endDate);
+                });
         })->exists();
     }
 
@@ -75,7 +79,8 @@ class Advertisement extends Model
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeFilterAndSort($query, $request)
+    #[Scope]
+    protected function filterAndSort($query, $request)
     {
         if ($request->has('sort')) {
             switch ($request->sort) {
@@ -144,6 +149,34 @@ class Advertisement extends Model
     {
         $highestBid = $this->highestBid();
         $currentPrice = $highestBid ? $highestBid->amount : $this->price;
-        return (float) $currentPrice + 0.01;
+        return (float)$currentPrice + 0.01;
+    }
+
+    /**
+     * The advertisements that are related to this advertisement.
+     * (i.e., items selected TO BE SHOWN WITH this one)
+     */
+    public function relatedAdvertisements()
+    {
+        return $this->belongsToMany(
+            __CLASS__, // Related model
+            'advertisement_related_advertisement', // Pivot table name
+            'advertisement_id', // Foreign key on pivot table for THIS model
+            'related_advertisement_id' // Foreign key on pivot table for the RELATED model
+        )->withTimestamps(); // If you added timestamps to the pivot
+    }
+
+    /**
+     * The advertisements that THIS advertisement is related TO.
+     * (i.e., if this ad was selected as a related item by OTHERS)
+     */
+    public function relatedTo()
+    {
+        return $this->belongsToMany(
+            __CLASS__,
+            'advertisement_related_advertisement',
+            'related_advertisement_id', // Flipped keys
+            'advertisement_id'
+        )->withTimestamps();
     }
 }
