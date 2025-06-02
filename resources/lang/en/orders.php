@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'title' => 'My Purchase History',
+    'heading' => 'My Purchase History',
+    'subheading' => 'Your purchases',
+    'description' => 'An overview of the items you have bought.',
+    'success' => 'Success!',
+    'error' => 'Error!',
+    'sort_by_price' => 'Sort by price',
+    'no_sort' => '-- No sorting --',
+    'price_low_high' => 'Price: Low to high',
+    'price_high_low' => 'Price: High to low',
+    'date_new_old' => 'Date: Newest first',
+    'date_old_new' => 'Date: Oldest first',
+    'filter_by_category' => 'Filter by category',
+    'no_filter' => '-- No filter option --',
+    'no_orders' => 'You have not placed any orders yet.',
+    'no_image' => 'No image',
+    'category' => 'Category',
+    'not_applicable' => 'N/A',
+    'paid' => 'Paid',
+    'seller' => 'Seller',
+    'unknown' => 'Unknown',
+    'rating' => 'Seller rating:',
+    'order_date' => 'Order date',
+];
