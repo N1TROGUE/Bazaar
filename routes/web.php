@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdvertisementController;
+use App\Http\Controllers\Api\AdvertisementApiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BidController;
 use App\Http\Controllers\CompanyLandingPageController;
@@ -95,5 +96,9 @@ Route::get('/company/{slug}', [CompanyLandingPageController::class, 'show'])->na
 // Advertisements favorite route
 Route::post('/advertisements/{advertisement}/favorite', [FavoriteAdvertisementController::class, 'toggle'])->name('advertisements.favorite');
 
+//API
+Route::get('/api/advertenties', [AdvertisementApiController::class, 'index']);
+
 // Advertisements bid route
 Route::post('/advertisements/{advertisement}/bid', [BidController::class, 'store'])->name('bid.store')->middleware('auth');
+

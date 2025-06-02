@@ -15,6 +15,9 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+        App\Providers\AppServiceProvider::class,
+
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
