@@ -114,7 +114,7 @@
                     </div>
 
                     <div class="sm:col-span-4">
-                        <h3 class="text-md font-semibold mb-2">Landingpage Components</h3>
+                        <h3 class="text-md font-semibold mb-2">Componenten</h3>
                         <div class="flex flex-col gap-4">
                             @foreach($landingPageComponents as $component)
                                 <label for="{{ $component->component_type }}_enabled" class="flex items-center p-4 bg-white border rounded-lg shadow-sm cursor-pointer transition hover:shadow-md hover:border-indigo-400">
