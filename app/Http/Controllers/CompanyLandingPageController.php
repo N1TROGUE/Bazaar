@@ -28,6 +28,8 @@ class CompanyLandingPageController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
+        $dashboardImage = $components->firstWhere('component_type', 'dashboard_image')->data['path'] ?? null;
+
         // Advertisements belonging to the company
         $query = $companyProfileUser->advertisements()
                                    ->where('status', 'active')
@@ -46,6 +48,7 @@ class CompanyLandingPageController extends Controller
             'advertisementCategories' => $advertisementCategories,
             'favoriteAdvertisements' => $favoriteAdvertisements,
             'components' => $components,
+            'dashboardImage' => $dashboardImage,
         ]);
     }
 }

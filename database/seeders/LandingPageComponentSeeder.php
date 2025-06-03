@@ -37,7 +37,9 @@ class LandingPageComponentSeeder extends Seeder
         LandingPageComponent::create([
             'user_id' => 1,
             'component_type' => 'dashboard_image',
-            'data' => null,
+            'data' => [
+                'path' => 'dashboard_images/dashboard_image.png',
+            ],
             'is_active' => true,
         ]);
     }

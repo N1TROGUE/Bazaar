@@ -16,8 +16,15 @@ class SettingsController extends Controller
     public function showSettings()
     {
         $settings = Settings::first();
+        $landingPageComponents = Auth::user()->landingPageComponents;
 
-        return view('theme-settings.settings', compact('settings'));
+        $dashboardImageComponent = $landingPageComponents->where('component_type', 'dashboard_image')->first()?->data['path'] ?? null;
+
+        return view('theme-settings.settings', [
+            'settings' => $settings,
+            'landingPageComponents' => $landingPageComponents,
+            'dashboardImage' => $dashboardImageComponent,
+        ]);
     }
 
     // POST: Update de settings in de database
@@ -83,18 +90,19 @@ class SettingsController extends Controller
         $user->slug = $slug;
         $user->save();
 
-        $component = $user->landingPageComponents;
+        $components = $user->landingPageComponents;
 
-        if ($request->filled('welcome_message')) {
-            $component->welcome_message = $request->input('welcome_message');
+        if ($request->hasFile('dashboard_image')) {
+            $imagePath = $request->file('dashboard_image')->store('dashboard_images', 'public');
+            $components->welcome_image = Storage::url($imagePath);
+            $dashboardComponent->save();
         }
 
-        if ($request->hasFile('welcome_image')) {
-            $imagePath = $request->file('welcome_image')->store('welcome_images', 'public');
-            $component->welcome_image = Storage::url($imagePath);
+        foreach ($components as $component) {
+            $checkboxName = $component->component_type . '_enabled';
+            $component->is_active = $request->has($checkboxName);
+            $component->save();
         }
-
-        $component->save();
 
         return back()->with('success', 'Instellingen succesvol bijgewerkt!');
     }

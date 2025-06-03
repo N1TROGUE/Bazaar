@@ -14,28 +14,32 @@
             <x-success-message>{{ session('success') }}</x-success-message>
         @endif
 
-        {{-- Image Section for Company Landing Page --}}
-        @if($components->contains('component_type', 'dashboard_image'))
-
-        @endif
-
-        {{-- Welcome Message Section for Company Landing Page --}}
-        @if($components->contains('component_type', 'welcome_message'))
-            <div class="mx-auto max-w-2xl px-4 pt-8 sm:px-6 lg:max-w-4xl lg:px-8">
-                <div class="bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl shadow-lg p-8 flex items-center gap-6">
-                    <div>
-                        <h2 class="text-3xl font-extrabold text-white mb-2">Welkom bij {{ $company->name }}!</h2>
-                        <p class="text-lg text-indigo-100">
-                            Ontdek onze nieuwste aanbiedingen, favoriete producten en meer. We zijn blij dat je er bent!
-                        </p>
-                    </div>
-                    <svg class="w-20 h-20 text-white/30 hidden md:block" fill="none" viewBox="0 0 64 64">
-                        <circle cx="32" cy="32" r="32" fill="currentColor" />
-                        <text x="50%" y="50%" text-anchor="middle" fill="#fff" font-size="28" font-family="Arial" dy=".3em">👋</text>
-                    </svg>
+        <div class="flex flex-row justify-between">
+            {{-- Image Section for Company Landing Page --}}
+            @if($components->contains('component_type', 'dashboard_image') && isset($dashboardImage))
+                <div class="max-w-xs sm:px-4 lg:max-w-xs">
+                    <img src="{{ Storage::disk('public')->url($dashboardImage) }}" alt="Dashboard Image" class="w-40 h-40 p-2 object-cover rounded-xl" />
                 </div>
-            </div>
-        @endif
+            @endif
+
+            {{-- Welcome Message Section for Company Landing Page --}}
+            @if($components->contains('component_type', 'welcome_message'))
+                <div class="max-w-2xl px-4 sm:px-6 lg:max-w-4xl lg:px-8">
+                    <div class="bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl shadow-lg p-8 flex items-center gap-6">
+                        <div>
+                            <h2 class="text-3xl font-extrabold text-white mb-2">Welkom {{ $company->name }}!</h2>
+                            <p class="text-lg text-indigo-100">
+                                Ontdek onze nieuwste aanbiedingen, favoriete producten en meer. We zijn blij dat je er bent!
+                            </p>
+                        </div>
+                        <svg class="w-20 h-20 text-white/30 hidden md:block" fill="none" viewBox="0 0 64 64">
+                            <circle cx="32" cy="32" r="32" fill="currentColor" />
+                            <text x="50%" y="50%" text-anchor="middle" fill="#fff" font-size="28" font-family="Arial" dy=".3em">👋</text>
+                        </svg>
+                    </div>
+                </div>
+            @endif
+        </div>
 
         @if($components->contains('component_type', 'advertisements'))
             <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
