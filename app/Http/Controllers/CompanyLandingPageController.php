@@ -19,34 +19,33 @@ class CompanyLandingPageController extends Controller
     public function show(Request $request, string $slug)
     {
         // Manually fetch the user by the slug
-        $companyProfileUser = User::where('slug', $slug)->first();
-
-        // Handle case where user is not found
-        if (!$companyProfileUser) {
-            abort(404, 'Company profile not found.');
-        }
+        $companyProfileUser = User::where('slug', $slug)->firstOrFail();
 
         $advertisementCategories = AdvertisementCategory::all();
         $favoriteAdvertisements = collect();
+        $components  = $companyProfileUser->landingPageComponents()
+            ->where('is_active', true)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-        // Now that $companyProfileUser is fetched, the rest of the logic can proceed
+        // Advertisements belonging to the company
         $query = $companyProfileUser->advertisements()
                                    ->where('status', 'active')
                                    ->filterAndSort($request);
 
         $advertisements = $query->paginate(10);
 
-
         if (Auth::check()) {
-            $loggedInUser = Auth::user(); // Use a different variable for the logged-in user
+            $loggedInUser = Auth::user();
             $favoriteAdvertisements = $loggedInUser->favoriteAdvertisements()->get();
         }
 
-        return view('index', [
+        return view('dashboard', [
             'company' => $companyProfileUser,
             'advertisements' => $advertisements,
             'advertisementCategories' => $advertisementCategories,
             'favoriteAdvertisements' => $favoriteAdvertisements,
+            'components' => $components,
         ]);
     }
 }

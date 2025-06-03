@@ -79,9 +79,22 @@ class SettingsController extends Controller
         $settings->save();
 
         // Update de slug van de gebruiker
-        $slug = Str::slug($request->input('company_slug')); // This makes it lowercase and replaces spaces with dashes
+        $slug = Str::slug($request->input('company_slug'));
         $user->slug = $slug;
         $user->save();
+
+        $component = $user->landingPageComponents;
+
+        if ($request->filled('welcome_message')) {
+            $component->welcome_message = $request->input('welcome_message');
+        }
+
+        if ($request->hasFile('welcome_image')) {
+            $imagePath = $request->file('welcome_image')->store('welcome_images', 'public');
+            $component->welcome_image = Storage::url($imagePath);
+        }
+
+        $component->save();
 
         return back()->with('success', 'Instellingen succesvol bijgewerkt!');
     }

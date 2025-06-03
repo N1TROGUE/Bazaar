@@ -81,6 +81,33 @@
 
                         <p class="mt-2 text-xs text-gray-500">Gebruik alleen letters, cijfers, streepjes (-) en underscores (_). Dit wordt onderdeel van je unieke URL.</p>
                     </div>
+
+                    {{-- Afbeelding Landingspagina --}}
+                    <div class="sm:col-span-4">
+                        <label for="dashboard_image" class="block text-sm/6 font-medium text-gray-900">Afbeelding landingspagina</label>
+                        @php
+                            $currentImage = Auth::user()->landing_page_settings['dashboard_image']['path'] ?? null;
+                        @endphp
+                        @if($currentImage)
+                            <div class="mt-2 mb-2">
+                                <p class="text-xs text-gray-600 mb-1">Huidige afbeelding:</p>
+                                <img src="{{ Storage::disk('public')->url($currentImage) }}" alt="Huidige afbeelding" class="max-h-40 rounded-md border border-gray-200">
+                            </div>
+                        @endif
+                        <div class="mt-2 flex items-center gap-x-3">
+                            <input type="file" id="dashboard_image" name="landing_page_settings[dashboard_image][file]"
+                                   class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:outline-none
+                                          file:mr-4 file:py-2 file:px-4
+                                          file:rounded-l-lg file:border-0
+                                          file:text-sm file:font-semibold
+                                          file:bg-indigo-50 file:text-indigo-700
+                                          hover:file:bg-indigo-100">
+                        </div>
+                        <p class="mt-1 text-xs text-gray-500">Upload een afbeelding voor de bovenkant van uw landingspagina (bijv. PNG, JPG tot 5MB).</p>
+                        @error('landing_page_settings.dashboard_image.file')
+                            <x-form-error>{{ $message }}</x-form-error>
+                        @enderror
+                    </div>
                 </div>
             </div>
 

@@ -193,8 +193,19 @@ class User extends Authenticatable
         return $review->rating ?? null;
     }
 
+    /**
+     * Get the bids placed by the user.
+     */
     public function bids()
     {
         return $this->hasMany(Bid::class, 'bidder_id');
+    }
+
+    /**
+     * Get the landing page components owned by the user
+     */
+    public function landingPageComponents()
+    {
+        return $this->hasMany(LandingPageComponent::class);
     }
 }
