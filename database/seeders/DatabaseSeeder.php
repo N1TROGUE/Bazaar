@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
             ReviewSeeder::class,
             OrderSeeder::class,
             RentalSeeder::class,
-            RelatedAdvertisementSeeder::class
+            RelatedAdvertisementSeeder::class,
+            LandingPageComponentSeeder::class,
         ]);
     }
 }
