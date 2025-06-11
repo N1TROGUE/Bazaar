@@ -16,8 +16,15 @@ class SettingsController extends Controller
     public function showSettings()
     {
         $settings = Settings::first();
+        $landingPageComponents = Auth::user()->landingPageComponents;
 
-        return view('theme-settings.settings', compact('settings'));
+        $dashboardImageComponent = $landingPageComponents->where('component_type', 'dashboard_image')->first()?->data['path'] ?? null;
+
+        return view('theme-settings.settings', [
+            'settings' => $settings,
+            'landingPageComponents' => $landingPageComponents,
+            'dashboardImage' => $dashboardImageComponent,
+        ]);
     }
 
     // POST: Update de settings in de database
@@ -79,9 +86,23 @@ class SettingsController extends Controller
         $settings->save();
 
         // Update de slug van de gebruiker
-        $slug = Str::slug($request->input('company_slug')); // This makes it lowercase and replaces spaces with dashes
+        $slug = Str::slug($request->input('company_slug'));
         $user->slug = $slug;
         $user->save();
+
+        $components = $user->landingPageComponents;
+
+        if ($request->hasFile('dashboard_image')) {
+            $imagePath = $request->file('dashboard_image')->store('dashboard_images', 'public');
+            $components->welcome_image = Storage::url($imagePath);
+            $dashboardComponent->save();
+        }
+
+        foreach ($components as $component) {
+            $checkboxName = $component->component_type . '_enabled';
+            $component->is_active = $request->has($checkboxName);
+            $component->save();
+        }
 
         return back()->with('success', 'Instellingen succesvol bijgewerkt!');
     }

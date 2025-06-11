@@ -39,7 +39,6 @@
                         </div>
                     </div>
 
-
                     {{-- Navigatiekleur --}}
                     <div class="sm:col-span-4">
                         <label for="nav_color" class="block text-sm/6 font-medium text-gray-900">Navigatiebalk kleur</label>
@@ -62,8 +61,7 @@
 
                     {{-- Landingspagina URL --}}
                     <div class="sm:col-span-4">
-                        <label for="company_slug" class="block mb-2 text-sm/6 font-medium text-gray-700">Custom URL:</label>
-
+                        <x-form-label for="company_slug">Custom URL:</x-form-label>
                         <div class="mt-1 flex rounded-md shadow-sm">
                             <span
                                 class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
@@ -76,11 +74,65 @@
                         </div>
 
                         @error('company_slug')
-                            <x-form-error>{{ $message }}</x-form-error>
+                        <x-form-error>{{ $message }}</x-form-error>
                         @enderror
 
                         <p class="mt-2 text-xs text-gray-500">Gebruik alleen letters, cijfers, streepjes (-) en underscores (_). Dit wordt onderdeel van je unieke URL.</p>
                     </div>
+
+                    <div class="sm:col-span-4">
+                        <hr class="my-2">
+                        <h2 class="text-xl font-bold text-gray-900">Landingspagina componenten</h2>
+                    </div>
+
+                    {{-- Afbeelding Landingspagina --}}
+                    <div class="sm:col-span-4">
+                        <x-form-label for="dashboard_image">Afbeelding landingspagina</x-form-label>
+
+                        @if($dashboardImage)
+                            <div class="mt-2 mb-2">
+                                <p class="text-xs text-gray-600 mb-1">Huidige afbeelding:</p>
+                                <img src="{{ Storage::disk('public')->url($dashboardImage) }}" alt="Huidige afbeelding" class="max-h-40 rounded-md border border-gray-200 p-4">
+                            </div>
+                        @endif
+
+                        <div class="mt-2 flex items-center gap-x-3">
+                            <input type="file" id="dashboard_image" name="landing_page_settings[dashboard_image][file]"
+                                   class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:outline-none
+                                          file:mr-4 file:py-2 file:px-4
+                                          file:rounded-l-lg file:border-0
+                                          file:text-sm file:font-semibold
+                                          file:bg-indigo-50 file:text-indigo-700
+                                          hover:file:bg-indigo-100">
+                        </div>
+
+                        <p class="mt-1 text-xs text-gray-500">Upload een afbeelding voor de bovenkant van uw landingspagina (bijv. PNG, JPG tot 5MB).</p>
+
+                        @error('landing_page_settings.dashboard_image.file')
+                            <x-form-error>{{ $message }}</x-form-error>
+                        @enderror
+                    </div>
+
+                    <div class="sm:col-span-4">
+                        <h3 class="text-md font-semibold mb-2">Componenten</h3>
+                        <div class="flex flex-col gap-4">
+                            @foreach($landingPageComponents as $component)
+                                <label for="{{ $component->component_type }}_enabled" class="flex items-center p-4 bg-white border rounded-lg shadow-sm cursor-pointer transition hover:shadow-md hover:border-indigo-400">
+                                    <input
+                                        type="checkbox"
+                                        id="{{ $component->component_type }}_enabled"
+                                        name="{{ $component->component_type }}_enabled"
+                                        value="1"
+                                        {{ $component->is_active ? 'checked' : '' }}
+                                        class="form-checkbox h-5 w-5 text-indigo-600 border-gray-300 rounded mr-4 transition">
+                                    <span class="text-sm text-gray-800 font-medium">
+                                        {{ ucfirst(str_replace('_', ' ', $component->component_type)) }}
+                                    </span>
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
