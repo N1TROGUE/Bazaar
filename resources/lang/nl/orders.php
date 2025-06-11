@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'title' => 'Mijn Aankoopgeschiedenis',
+    'heading' => 'Mijn Aankoopgeschiedenis',
+    'subheading' => 'Jouw aankopen',
+    'description' => 'Een overzicht van de items die je hebt gekocht.',
+    'success' => 'Gelukt!',
+    'error' => 'Fout!',
+    'sort_by_price' => 'Sorteer op prijs',
+    'no_sort' => '-- Geen sortering --',
+    'price_low_high' => 'Prijs: Laag naar hoog',
+    'price_high_low' => 'Prijs: Hoog naar laag',
+    'date_new_old' => 'Datum: Nieuwste eerst',
+    'date_old_new' => 'Datum: Oudste eerst',
+    'filter_by_category' => 'Filter op categorie',
+    'no_filter' => '-- Geen filteroptie --',
+    'no_orders' => 'Je hebt nog geen aankopen geplaatst.',
+    'no_image' => 'Geen afbeelding',
+    'category' => 'Categorie',
+    'not_applicable' => 'N.v.t.',
+    'paid' => 'Betaald',
+    'seller' => 'Verkoper',
+    'unknown' => 'Onbekend',
+    'rating' => 'Beoordeling verkoper:',
+    'order_date' => 'Besteldatum',
+];

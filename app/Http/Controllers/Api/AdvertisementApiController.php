@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Advertisement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdvertisementApiController extends Controller
 {
@@ -16,8 +17,10 @@ class AdvertisementApiController extends Controller
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
+        $userId = Auth::user()->id;
+
         $advertisements = Advertisement::where('status', 'active')
-            ->where('user_id', 2)  // Pas hier je user_id aan als nodig
+            ->where('user_id', $userId)  // Pas hier je user_id aan als nodig
             ->paginate(10);
 
         return response()->json($advertisements);
