@@ -61,10 +61,6 @@
 
                     {{-- Landingspagina URL --}}
                     <div class="sm:col-span-4">
-
-                        <label for="company_slug" class="block mb-2 text-sm/6 font-medium text-gray-700">{{ __('settings.custom_url') }}</label>
-
-
                         <x-form-label for="company_slug">Custom URL:</x-form-label>
 
                         <div class="mt-1 flex rounded-md shadow-sm">
@@ -102,7 +98,7 @@
                         @endif
 
                         <div class="mt-2 flex items-center gap-x-3">
-                            <input type="file" id="dashboard_image" name="landing_page_settings[dashboard_image][file]"
+                            <input type="file" id="dashboard_image" name="dashboard_image"
                                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:outline-none
                                           file:mr-4 file:py-2 file:px-4
                                           file:rounded-l-lg file:border-0
@@ -113,7 +109,7 @@
 
                         <p class="mt-1 text-xs text-gray-500">Upload een afbeelding voor de bovenkant van uw landingspagina (bijv. PNG, JPG tot 5MB).</p>
 
-                        @error('landing_page_settings.dashboard_image.file')
+                        @error('dashboard_image')
                             <x-form-error>{{ $message }}</x-form-error>
                         @enderror
                     </div>

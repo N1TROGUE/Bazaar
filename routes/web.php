@@ -53,7 +53,7 @@ Route::middleware([CheckAdmin::class])->group(function () {
     Route::get('/upload-contract', [ContractController::class, 'showContract'])->name('upload.contract');
     Route::get('/exporteer-contract', [ContractController::class, 'exportContract'])->name('export.registration');
     Route::post('/contracts', [ContractController::class, 'storeContract'])->name('contracts.store');
-    Route::get('/contracts/export/{user}', [ContractController::class, 'downloadContractPdf'])->name('contracts.export.pdf');
+    Route::get('/contracts/export/{user:id}', [ContractController::class, 'downloadContractPdf'])->name('contracts.export.pdf');
     Route::get('/thema-instellingen', [SettingsController::class, 'showSettings'])->name('settings.show');
     Route::post('/settings', [SettingsController::class, 'updateSettings'])->name('settings.update');
 });
