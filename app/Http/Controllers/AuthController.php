@@ -7,6 +7,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Role;
+use App\Models\LandingPageComponent;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -74,6 +75,8 @@ class AuthController extends Controller
             'role_id' => $request->role_id,
         ]);
 
+        $this->createDefaultLandingPageComponents($user);
+
         Auth::login($user);
 
         return redirect()->route('index');
@@ -100,7 +103,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             return redirect()->route('index');
-        } 
+        }
 
         throw ValidationException::withMessages([
             'credentials' => 'Je inloggegevens zijn incorrect.'
@@ -115,7 +118,30 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('show.login'); 
+        return redirect()->route('show.login');
+    }
+
+    /**
+     * Create default landing page components for a user.
+     */
+    private function createDefaultLandingPageComponents(User $user): void
+    {
+        if (in_array($user->role_id, [3, 4])) {
+            $components = ['welcome_message', 'advertisements', 'favorites', 'dashboard_image'];
+            foreach ($components as $componentType) {
+                $settings = [];
+                if ($componentType === 'dashboard_image') {
+                    $settings = ['path' => 'dashboard_images/dashboard_image.png'];
+                }
+
+                LandingPageComponent::create([
+                    'user_id' => $user->id,
+                    'component_type' => $componentType,
+                    'is_active' => true,
+                    'data' => $settings,
+                ]);
+            }
+        }
     }
 
 }

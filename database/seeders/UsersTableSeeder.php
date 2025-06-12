@@ -32,5 +32,15 @@ class UsersTableSeeder extends Seeder
             'role_id' => 2, // role of particulier,
             'email_verified_at' => now(),
         ]);
+
+        // Zakelijke gebruiker
+        User::factory()->create([
+            'name' => 'Zakelijke Gebruiker Seeder',
+            'email' => 'zakelijk-seeder@bazaar.local',
+            'password' => Hash::make('SterkWachtwoord123!'),
+            'slug' => 'zgs',
+            'role_id' => 3,
+            'email_verified_at' => now(),
+        ]);
     }
 }
