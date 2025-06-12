@@ -13,8 +13,8 @@
 <body>
 <div class="min-h-full">
     <nav style="background-color: {{ $appSettings->nav_color ?? '#1f2937' }}">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="flex h-16 items-center justify-between">
+        <div class="mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-center">
                 <div class="flex items-center">
                     <div class="shrink-0">
                         <img class="size-8" src="{{ $appSettings->logo_path ?? 'https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500' }}" alt="{{ __('layout.logo_alt') }}">
