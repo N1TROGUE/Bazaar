@@ -180,6 +180,20 @@
                         </div>
                     </div>
 
+                    <!-- Vervaldatum -->
+                    <div class="sm:col-span-3">
+                        <label for="expiration_date" class="block text-sm/6 font-medium text-gray-900">Vervalt op <span
+                                style="color: red;"> *</span></label>
+                        <div class="mt-2">
+                            <div
+                                class="flex items-center rounded-md bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+                                <input style="--tw-ring-color: {{ $appSettings->button_color ?? '#4f46e5' }};"
+                                       type="datetime-local" name="expiration_date" id="expiration_date"
+                                       class="block w-1/2 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-base text-gray-900 outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm/6">
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -191,7 +205,7 @@
             @endforeach
             </ul>
             @endif
-            
+
             <div class="mt-6 flex items-center justify-end gap-x-6">
                 <button type="submit"
                         style="background-color: {{ $appSettings->button_color ?? '#4f46e5' }};"

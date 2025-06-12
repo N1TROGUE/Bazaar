@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Advertisement;
 use App\Models\Bid;
-use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BidController extends Controller
 {
@@ -16,6 +16,11 @@ class BidController extends Controller
 
         if ($response !== null) {
             return back()->with('error', $response)->withInput();
+        }
+
+        $userBidCount = $advertisement->bids()->where('bidder_id', Auth::id())->count();
+        if ($userBidCount >= 4) {
+            return back()->with('error', "Je mag niet meer dan 4 biedingen plaatsen op dezelfde advertentie.")->withInput();
         }
 
         $validated = $request->validate([

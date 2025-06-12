@@ -16,7 +16,7 @@ class AdvertisementController extends Controller
     public function index(Request $request)
     {
         $query = Advertisement::query()->where('status', 'active')->filterAndSort($request);
-        $advertisements = $query->paginate(10);
+        $advertisements = $query->paginate(12);
         $advertisementCategories = AdvertisementCategory::all();
         $favoriteAdvertisements = collect();
 

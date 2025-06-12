@@ -6,6 +6,10 @@
             <x-error-message>{{ $message }}</x-error-message>
         @enderror
 
+        @if(session('error'))
+            <x-error-message>{{ session('error') }}</x-error-message>
+        @endif
+
         <div class="flex flex-row justify-evenly pt-16">
             <div class="max-w-4xl pr-4 sm:pr-6 lg:pr-8">
                 <div class="flex flex-col gap-20">
