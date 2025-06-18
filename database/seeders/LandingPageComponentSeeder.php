@@ -42,5 +42,35 @@ class LandingPageComponentSeeder extends Seeder
             ],
             'is_active' => true,
         ]);
+
+        LandingPageComponent::create([
+            'user_id' => 3,
+            'component_type' => 'welcome_message',
+            'data' => null,
+            'is_active' => true,
+        ]);
+
+        LandingPageComponent::create([
+            'user_id' => 3,
+            'component_type' => 'advertisements',
+            'data' => null,
+            'is_active' => true,
+        ]);
+
+        LandingPageComponent::create([
+            'user_id' => 3,
+            'component_type' => 'favorites',
+            'data' => null,
+            'is_active' => true,
+        ]);
+
+        LandingPageComponent::create([
+            'user_id' => 3,
+            'component_type' => 'dashboard_image',
+            'data' => [
+                'path' => 'dashboard_images/dashboard_image.png',
+            ],
+            'is_active' => true,
+        ]);
     }
 }
